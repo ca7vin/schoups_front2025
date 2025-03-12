@@ -13,7 +13,7 @@ export default defineNuxtConfig({
   modules: ["@nuxt/fonts", "nuxt-swiper", "@vesp/nuxt-fontawesome"],
   fontawesome: {
     icons: {
-      solid: ['arrow-left', 'arrow-right'],
+      solid: ['chevron-left', 'chevron-right'],
     }
   }
 });
