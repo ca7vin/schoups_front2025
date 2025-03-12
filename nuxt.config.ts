@@ -10,5 +10,10 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
-  modules: ["@nuxt/fonts", "nuxt-swiper"],
+  modules: ["@nuxt/fonts", "nuxt-swiper", "@vesp/nuxt-fontawesome"],
+  fontawesome: {
+    icons: {
+      solid: ['arrow-left', 'arrow-right'],
+    }
+  }
 });

@@ -12,7 +12,7 @@ onMounted(() => {
 <template>
   <div class="w-full flex justify-around pb-10">
     <button class="w-1/12" @click="swiper.prev()">
-      Prev
+      <font-awesome :style="{color: '#d3338b'}" #d3338b" icon="arrow-left" />
     </button>
 
     <swiper-container class="w-10/12" ref="containerRef">
@@ -30,7 +30,7 @@ onMounted(() => {
     </swiper-container>
 
     <button class="w-1/12" @click="swiper.next()">
-      Next
+      <font-awesome :style="{color: '#d3338b'}" #d3338b" icon="arrow-right" />
     </button>
   </div>
 </template>

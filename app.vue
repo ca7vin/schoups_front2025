@@ -89,7 +89,7 @@
     <!-- SECT 3 - PARTNERS START -->
     <section>
       <div class="w-full flex flex-col items-center">
-        <h2 class="text-6xl py-10">Nos partenaires</h2>
+        <h2 class="text-6xl py-10" style="color: #D4338B;">Nos partenaires</h2>
         <SwiperCustom />
       </div>
     </section>
