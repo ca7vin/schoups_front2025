@@ -45,13 +45,14 @@
             laborum?</p>
           <div class="flex mt-10">
             <NuxtLink class="rounded-4xl text-xs uppercase py-4 px-10 no-underline flex justify-center"
-            onmouseover="this.style.backgroundColor='#fff';this.style.color='#D4338B';"
-            onmouseout="this.style.backgroundColor='#D4338B';this.style.color='#fff';"
-            style="border: #D4338B solid 1px; width: 150px;; background-color: #D4338B; color: #fff;" to="">Nos produits</NuxtLink>
+              onmouseover="this.style.backgroundColor='#fff';this.style.color='#D4338B';"
+              onmouseout="this.style.backgroundColor='#D4338B';this.style.color='#fff';"
+              style="border: #D4338B solid 1px; width: 150px;; background-color: #D4338B; color: #fff;" to="">Nos
+              produits</NuxtLink>
             <NuxtLink class="rounded-4xl text-xs uppercase py-4 px-10 no-underline flex justify-center ms-10"
-            onmouseover="this.style.backgroundColor='#D4338B';this.style.color='#fff';"
-            onmouseout="this.style.backgroundColor='#fff';this.style.color='#D4338B';"
-            style="border: #D4338B solid 1px; width: 150px;; color: #D4338B;" to="">Contactez-nous</NuxtLink>
+              onmouseover="this.style.backgroundColor='#D4338B';this.style.color='#fff';"
+              onmouseout="this.style.backgroundColor='#fff';this.style.color='#D4338B';"
+              style="border: #D4338B solid 1px; width: 150px;; color: #D4338B;" to="">Contactez-nous</NuxtLink>
           </div>
         </div>
         <div class="flex-col w-1/2">
@@ -60,11 +61,35 @@
       </div>
     </section>
     <!-- SECT 1 - HERO END -->
+    <!-- SECT 2 - ABOUT START -->
+    <section>
+      <div class="flex w-full items-center" style="background-color: #D4338B;">
+        <div class="flex-col w-1/2">
+          <img src="https://placehold.co/600x600" class="w-full" alt="">
+        </div>
+        <div class="flex-col w-1/2 px-32">
+          <h1 class="text-8xl mb-10 text-center" style="color: #fff;">Qui sommes-nous ?</h1>
+          <p class="text-lg text-center" style="color: #fff;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint,
+            similique eos. Ab facilis aspernatur, maiores recusandae excepturi, dolores sapiente voluptas quo inventore,
+            delectus expedita aliquid animi repellendus. Dolore quae ut, magni illum est quibusdam praesentium amet
+            ipsa? In blanditiis numquam iste voluptate, repellat eos veniam quidem optio quisquam, cumque maiores sit
+            deleniti magni! Sit voluptate harum, necessitatibus adipisci nihil itaque explicabo iste, fugiat accusamus
+            architecto, voluptatibus reprehenderit voluptates natus esse quidem nobis repellat doloribus. Nulla incidunt
+            excepturi voluptatum unde nesciunt rerum voluptas ullam quaerat ut dignissimos consectetur repellendus odit
+            dolores molestiae molestias illum consequatur non porro, obcaecati dolorum maiores quasi. Fugit accusamus
+            tenetur facilis, est quod tempora pariatur sed accusantium reprehenderit commodi officia hic rerum
+            distinctio dolorum necessitatibus magnam dolores. Placeat iure tempora, ea quis dolores dolore modi odio
+            molestiae veritatis beatae voluptate cum tenetur sequi, facilis ducimus rerum optio voluptatum eum
+            provident, eos porro temporibus blanditiis. Eius, praesentium consequuntur!</p>
+        </div>
+      </div>
+    </section>
+    <!-- SECT 2 - ABOUT END -->
     <!-- FOOTER START -->
     <footer>
       <div class="flex flex-col items-center justify-center" style="background-color: #D4338B; height: 200px;">
-        <p class="text-white text-md uppercase font-bold">Schoups - 2025</p>
-        <p class="text-white text-xs uppercase pt-4">© Calvin Van der Ghinst - Conception et mise en page du site</p>
+        <p class="text-white text-lg uppercase">Schoups - 2025</p>
+        <p class="text-white text-md uppercase pt-4">© Calvin Van der Ghinst - Conception et mise en page du site</p>
       </div>
     </footer>
     <!-- FOOTER END -->
