@@ -97,7 +97,7 @@
     <!-- FOOTER START -->
     <footer>
       <div class="flex flex-col items-center justify-center" style="background-color: #D4338B; height: 200px;">
-        <p class="text-white text-lg uppercase">Schoups - 2025</p>
+        <img src="./public/images/logo-footer.png" class="w-1/6" alt="">
         <p class="text-white text-md uppercase pt-4">© Calvin Van der Ghinst - Conception et mise en page du site</p>
       </div>
     </footer>
