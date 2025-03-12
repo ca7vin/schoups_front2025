@@ -69,7 +69,8 @@
         </div>
         <div class="flex-col w-1/2 px-32">
           <h1 class="text-8xl mb-10 text-center" style="color: #fff;">Qui sommes-nous ?</h1>
-          <p class="text-lg text-center" style="color: #fff;">Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint,
+          <p class="text-lg text-center" style="color: #fff;">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Sint,
             similique eos. Ab facilis aspernatur, maiores recusandae excepturi, dolores sapiente voluptas quo inventore,
             delectus expedita aliquid animi repellendus. Dolore quae ut, magni illum est quibusdam praesentium amet
             ipsa? In blanditiis numquam iste voluptate, repellat eos veniam quidem optio quisquam, cumque maiores sit
@@ -85,6 +86,14 @@
       </div>
     </section>
     <!-- SECT 2 - ABOUT END -->
+    <!-- SECT 3 - PARTNERS START -->
+    <section>
+      <div class="w-full flex flex-col items-center">
+        <h2 class="text-6xl py-10">Nos partenaires</h2>
+        <SwiperCustom />
+      </div>
+    </section>
+    <!-- SECT 3 - PARTNERS END -->
     <!-- FOOTER START -->
     <footer>
       <div class="flex flex-col items-center justify-center" style="background-color: #D4338B; height: 200px;">
