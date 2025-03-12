@@ -1,33 +1,33 @@
 <template>
   <div>
     <!-- HEADER WITH NAVIGATION -->
-    <header class="xyz-in navbar" xyz="fade up big">
+    <header id="header" class="xyz-in navbar" xyz="fade up big">
       <button @click="toggleMenu" class="menu-button" v-if="isMobile">
         <Icon name="heroicons:bars-3-20-solid" color="white" font-size="20px" padding="0" margin="0" />
       </button>
       <!-- NAVIGATION START -->
-      <nav :class="{ 'menu-open': menuOpen, 'menu': !menuOpen }" style="">
+      <nav id="navbar" :class="{ 'menu-open': menuOpen, 'menu': !menuOpen }">
         <ul class="flex items-center px-5" style="background-color: #D4338B; height: 80px;">
           <!-- LOGO -->
           <div class="flex flex-col lg:flex items-center w-2/5">
             <li class="uppercase text-white font-bold text-xl ps-10">
-              <NuxtLink class="no-underline" to="/">
+              <NuxtLink class="no-underline">
                 <img src="./public/images/logo-navbar.png" class="w-1/3" alt="">
               </NuxtLink>
             </li>
           </div>
           <div class="flex items-center ps-52 w-3/5 justify-around">
             <li class="text-white text-xs uppercase hover:underline">
-              <NuxtLink class="no-underline navFont" to="/">Accueil</NuxtLink>
+              <NuxtLink class="no-underline navFont" to="#hero">Accueil</NuxtLink>
             </li>
             <li class="text-white text-xs uppercase hover:underline">
-              <NuxtLink class="no-underline navFont" to="/">Qui sommes-nous</NuxtLink>
+              <NuxtLink class="no-underline navFont" to="#about">Qui sommes-nous</NuxtLink>
             </li>
             <li class="text-white text-xs uppercase hover:underline">
-              <NuxtLink class="no-underline navFont" to="/">Nos produits</NuxtLink>
+              <NuxtLink class="no-underline navFont" to="#products">Nos produits</NuxtLink>
             </li>
             <li class="text-white text-xs uppercase hover:underline">
-              <NuxtLink class="no-underline navFont" to="/">Contact</NuxtLink>
+              <NuxtLink class="no-underline navFont" to="#contact">Contact</NuxtLink>
             </li>
           </div>
         </ul>
@@ -35,10 +35,10 @@
       <!-- NAVIGATION END -->
     </header>
     <!-- SECT 1 - HERO START -->
-    <section>
+    <section id="hero">
       <div class="flex w-full items-center">
         <div class="flex-col w-1/2 px-32">
-          <h1 class="text-8xl mb-10" style="color: #D4338B;">De vraies glaces artisanales</h1>
+          <h1 class="text-7xl mb-10" style="color: #D4338B;">De vraies glaces <br> artisanales</h1>
           <p class="text-lg" style="color: #D4338B;">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Animi,
             est. Dolorum aliquid fugiat cum eum
             architecto quae velit nihil dolor? Aspernatur iusto quidem soluta quam perferendis architecto veritatis sunt
@@ -56,19 +56,19 @@
           </div>
         </div>
         <div class="flex-col w-1/2">
-          <img src="https://placehold.co/600x600" class="w-full" alt="">
+          <img src="./public/images/hero1.png" class="w-full" alt="">
         </div>
       </div>
     </section>
     <!-- SECT 1 - HERO END -->
     <!-- SECT 2 - ABOUT START -->
-    <section>
+    <section id="about">
       <div class="flex w-full items-center" style="background-color: #D4338B;">
         <div class="flex-col w-1/2">
-          <img src="https://placehold.co/600x600" class="w-full" alt="">
+          <img src="./public/images/hero1.png" class="w-full" alt="">
         </div>
         <div class="flex-col w-1/2 px-32">
-          <h1 class="text-8xl mb-10 text-center" style="color: #fff;">Qui sommes-nous ?</h1>
+          <h2 class="text-7xl mb-10 text-center" style="color: #fff;">Qui sommes-nous ?</h2>
           <p class="text-lg text-center" style="color: #fff;">Lorem ipsum dolor sit amet consectetur adipisicing elit.
             Sint,
             similique eos. Ab facilis aspernatur, maiores recusandae excepturi, dolores sapiente voluptas quo inventore,
@@ -87,13 +87,42 @@
     </section>
     <!-- SECT 2 - ABOUT END -->
     <!-- SECT 3 - PARTNERS START -->
-    <section>
+    <section id="partners">
       <div class="w-full flex flex-col items-center">
-        <h2 class="text-6xl py-10" style="color: #D4338B;">Nos partenaires</h2>
+        <h2 class="text-7xl py-10" style="color: #D4338B;">Nos partenaires</h2>
         <SwiperCustom />
       </div>
     </section>
     <!-- SECT 3 - PARTNERS END -->
+    <!-- SECT 4 - PRODUCTS START -->
+    <section id="products">
+      <div class="" style="background-color: #D4338B;">
+        <h2 class="text-7xl mb-10 text-center py-10" style="color: #fff;">Nos produits</h2>
+        <div class="flex justify-around mb-10">
+          <div class="flex flex-col w-1/5">
+            <img src="https://placehold.co/70x50" class="rounded-2xl" alt="">
+          </div>
+          <div class="flex flex-col w-1/5">
+            <img src="https://placehold.co/70x50" class="rounded-2xl" alt="">
+          </div>
+          <div class="flex flex-col w-1/5">
+            <img src="https://placehold.co/70x50" class="rounded-2xl" alt="">
+          </div>
+        </div>
+        <div class="flex justify-around">
+          <div class="flex flex-col w-1/5">
+            <img src="https://placehold.co/70x50" class="rounded-2xl" alt="">
+          </div>
+          <div class="flex flex-col w-1/5">
+            <img src="https://placehold.co/70x50" class="rounded-2xl" alt="">
+          </div>
+          <div class="flex flex-col w-1/5">
+            <img src="https://placehold.co/70x50" class="rounded-2xl" alt="">
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- SECT 4 - PRODUCTS END -->
     <!-- FOOTER START -->
     <footer>
       <div class="flex flex-col items-center justify-center" style="background-color: #D4338B; height: 200px;">
@@ -104,3 +133,19 @@
     <!-- FOOTER END -->
   </div>
 </template>
+<style>
+html {
+  scroll-behavior: smooth;
+}
+
+#header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+section {
+  scroll-margin-top: 80px;
+  /* même hauteur que ta navbar */
+}
+</style>
