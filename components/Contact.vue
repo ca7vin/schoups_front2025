@@ -1,45 +1,67 @@
 <template>
-    <section id="contact">
-      <div class="flex flex-col justify-center items-center">
-        <h2 class="text-7xl mb-10 text-center pt-10" style="color: #D4338B;">Contactez-nous</h2>
-        <div style="background-color: #D4338B;"
-          class="flex flex-col items-center justify-center w-8/12 p-10 rounded-4xl mb-10">
-          <div class="mb-4 flex flex-col w-full fieldCol">
-            <label for="name" class="text-white mb-2">Nom :</label>
-            <input style="background-color: #fff; border: none;" type="text" id="name" name="name"
-              class="px-3 py-2 border rounded-xl" required>
-          </div>
-          <div class="mb-4 flex flex-col w-full fieldCol">
-            <label for="name" class="text-white mb-2">Sujet :</label>
-            <input style="background-color: #fff; border: none;" type="text" id="name" name="name"
-              class="px-3 py-2 border rounded-xl" required>
-          </div>
-          <div class="mb-4 flex flex-col w-full fieldCol">
-            <label for="name" class="text-white mb-2">Email :</label>
-            <input style="background-color: #fff; border: none;" type="text" id="name" name="name"
-              class="px-3 py-2 border rounded-xl" required>
-          </div>
-          <div class="mb-4 flex flex-col w-full fieldCol">
-            <label for="name" class="text-white mb-2">Message :</label>
-            <textarea style="background-color: #fff; border: none;" type="text" id="name" name="name"
-              class="px-3 py-2 border rounded-xl" required></textarea>
-          </div>
-          <button class="rounded-xl text-md uppercase py-4 px-10 no-underline flex justify-center ms-10 mt-4"
-            onmouseover="this.style.backgroundColor='#D4338B';this.style.color='#fff';this.style.border='3px solid #fff';"
-            onmouseout="this.style.backgroundColor='#fff';this.style.color='#D4338B';this.style.border='3px solid #D4338B';"
-            style="border: 3px solid #D4338B; width: 200px; color: #D4338B; background-color: #fff; transition: all 0.3s ease;"
-            to="">
-            Envoyer
-          </button>
+  <section id="contact" class="px-4">
+    <div class="flex flex-col items-center">
+      <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-center text-[#D4338B] my-5">
+        Contactez-nous
+      </h2>
+
+      <form
+        class="w-full max-w-3xl bg-[#D4338B] p-6 sm:p-10 rounded-3xl flex flex-col gap-6 text-white"
+      >
+        <div class="flex flex-col w-full">
+          <label for="name" class="mb-2">Nom :</label>
+          <input
+            id="name"
+            name="name"
+            type="text"
+            required
+            class="bg-white text-black px-4 py-3 rounded-xl focus:outline-none"
+          />
         </div>
-      </div>
-    </section>
+
+        <div class="flex flex-col w-full">
+          <label for="subject" class="mb-2">Sujet :</label>
+          <input
+            id="subject"
+            name="subject"
+            type="text"
+            required
+            class="bg-white text-black px-4 py-3 rounded-xl focus:outline-none"
+          />
+        </div>
+
+        <div class="flex flex-col w-full">
+          <label for="email" class="mb-2">Email :</label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            required
+            class="bg-white text-black px-4 py-3 rounded-xl focus:outline-none"
+          />
+        </div>
+
+        <div class="flex flex-col w-full">
+          <label for="message" class="mb-2">Message :</label>
+          <textarea
+            id="message"
+            name="message"
+            rows="5"
+            required
+            class="bg-white text-black px-4 py-3 rounded-xl resize-none focus:outline-none"
+          ></textarea>
+        </div>
+
+        <button
+          type="submit"
+          class="self-center w-[200px] py-3 px-6 rounded-xl border-4 border-white bg-white text-[#D4338B] font-semibold uppercase transition-all duration-300 hover:bg-[#D4338B] hover:text-white hover:border-white"
+        >
+          Envoyer
+        </button>
+      </form>
+    </div>
+  </section>
 </template>
 
 <script lang="ts" setup>
-
 </script>
-
-<style>
-
-</style>

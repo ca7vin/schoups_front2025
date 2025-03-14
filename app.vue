@@ -75,16 +75,27 @@ onUnmounted(() => {
     <Contact />
     <!-- SECT 5 - CONTACT END -->
     <!-- FOOTER START -->
-    <footer>
-      <div class="flex flex-col items-center justify-center" style="background-color: #D4338B; height: 200px;">
-        <img src="./public/images/logo-footer.png" class="w-1/8" alt="Logo Footer" />
-        <div class="flex justify-between w-1/12 px-10">
+    <footer class="mt-5">
+      <div class="flex flex-col items-center justify-center bg-[#D4338B] py-8 px-4 sm:px-8">
+
+        <!-- Logo -->
+        <img src="./public/images/logo-footer.png" class="w-2/3 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-4"
+          alt="Logo Footer" />
+
+        <!-- Réseaux sociaux -->
+        <div class="flex gap-6 mt-2 mb-4">
           <font-awesome :style="{color: '#fff'}" :icon="['fab', 'instagram']" class="fa-2x" />
           <font-awesome :style="{color: '#fff'}" :icon="['fab', 'square-facebook']" class="fa-2x" />
         </div>
-        <p class="text-white text-xs uppercase pt-4">© Calvin Van der Ghinst - Conception et mise en page du site</p>
+
+        <!-- Crédit -->
+        <p class="text-white text-xs text-center uppercase px-4">
+          © Calvin Van der Ghinst – Conception et mise en page du site
+        </p>
+
       </div>
     </footer>
+
     <!-- FOOTER END -->
   </div>
 </template>
