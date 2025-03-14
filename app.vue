@@ -44,15 +44,21 @@
             architecto quae velit nihil dolor? Aspernatur iusto quidem soluta quam perferendis architecto veritatis sunt
             laborum?</p>
           <div class="flex mt-10">
-            <NuxtLink class="rounded-4xl text-xs uppercase py-4 px-10 no-underline flex justify-center"
-              onmouseover="this.style.backgroundColor='#fff';this.style.color='#D4338B';"
-              onmouseout="this.style.backgroundColor='#D4338B';this.style.color='#fff';"
-              style="border: #D4338B solid 1px; width: 150px;; background-color: #D4338B; color: #fff;" to="">Nos
-              produits</NuxtLink>
-            <NuxtLink class="rounded-4xl text-xs uppercase py-4 px-10 no-underline flex justify-center ms-10"
-              onmouseover="this.style.backgroundColor='#D4338B';this.style.color='#fff';"
-              onmouseout="this.style.backgroundColor='#fff';this.style.color='#D4338B';"
-              style="border: #D4338B solid 1px; width: 150px;; color: #D4338B;" to="">Contactez-nous</NuxtLink>
+            <NuxtLink class="rounded-4xl text-md uppercase py-4 px-10 no-underline flex justify-center"
+              onmouseover="this.style.backgroundColor='#fff'; this.style.color='#D4338B';"
+              onmouseout="this.style.backgroundColor='#D4338B'; this.style.color='#fff';"
+              style="border: #D4338B solid 1px; width: 200px; background-color: #D4338B; color: #fff; transition: all 0.3s ease;"
+              to="">
+              Nos produits
+            </NuxtLink>
+
+            <NuxtLink class="rounded-4xl text-md uppercase py-4 px-10 no-underline flex justify-center ms-10"
+              onmouseover="this.style.backgroundColor='#D4338B'; this.style.color='#fff';"
+              onmouseout="this.style.backgroundColor='#fff'; this.style.color='#D4338B';"
+              style="border: #D4338B solid 1px; width: 200px; color: #D4338B; transition: all 0.3s ease;" to="">
+              Contactez-nous
+            </NuxtLink>
+
           </div>
         </div>
         <div class="flex-col w-1/2">
@@ -147,11 +153,53 @@
       </div>
     </section>
     <!-- SECT 4 - PRODUCTS END -->
+    <!-- SECT 5 - CONTACT START -->
+    <section id="contact">
+      <div class="flex flex-col justify-center items-center">
+        <h2 class="text-7xl mb-10 text-center pt-10" style="color: #D4338B;">Contactez-nous</h2>
+        <div style="background-color: #D4338B;"
+          class="flex flex-col items-center justify-center w-8/12 p-10 rounded-4xl mb-10">
+          <div class="mb-4 flex flex-col w-full fieldCol">
+            <label for="name" class="text-white mb-2">Nom :</label>
+            <input style="background-color: #fff; border: none;" type="text" id="name" name="name"
+              class="px-3 py-2 border rounded-xl" required>
+          </div>
+          <div class="mb-4 flex flex-col w-full fieldCol">
+            <label for="name" class="text-white mb-2">Sujet :</label>
+            <input style="background-color: #fff; border: none;" type="text" id="name" name="name"
+              class="px-3 py-2 border rounded-xl" required>
+          </div>
+          <div class="mb-4 flex flex-col w-full fieldCol">
+            <label for="name" class="text-white mb-2">Email :</label>
+            <input style="background-color: #fff; border: none;" type="text" id="name" name="name"
+              class="px-3 py-2 border rounded-xl" required>
+          </div>
+          <div class="mb-4 flex flex-col w-full fieldCol">
+            <label for="name" class="text-white mb-2">Message :</label>
+            <textarea style="background-color: #fff; border: none;" type="text" id="name" name="name"
+              class="px-3 py-2 border rounded-xl" required></textarea>
+          </div>
+          <button class="rounded-xl text-md uppercase py-4 px-10 no-underline flex justify-center ms-10 mt-4"
+            onmouseover="this.style.backgroundColor='#D4338B';this.style.color='#fff';this.style.border='3px solid #fff';"
+            onmouseout="this.style.backgroundColor='#fff';this.style.color='#D4338B';this.style.border='3px solid #D4338B';"
+            style="border: 3px solid #D4338B; width: 200px; color: #D4338B; background-color: #fff; transition: all 0.3s ease;"
+            to="">
+            Envoyer
+          </button>
+
+        </div>
+      </div>
+    </section>
+    <!-- SECT 5 - CONTACT END -->
     <!-- FOOTER START -->
     <footer>
       <div class="flex flex-col items-center justify-center" style="background-color: #D4338B; height: 200px;">
-        <img src="./public/images/logo-footer.png" class="w-1/6" alt="">
-        <p class="text-white text-md uppercase pt-4">© Calvin Van der Ghinst - Conception et mise en page du site</p>
+        <img src="./public/images/logo-footer.png" class="w-1/8" alt="">
+        <div class="flex justify-between w-1/12 px-10">
+          <font-awesome :style="{color: '#fff'}" :icon="['fab', 'instagram']" class="fa-2x" />
+          <font-awesome :style="{color: '#fff'}" :icon="['fab', 'square-facebook']" class="fa-2x" />
+        </div>
+        <p class="text-white text-xs uppercase pt-4">© Calvin Van der Ghinst - Conception et mise en page du site</p>
       </div>
     </footer>
     <!-- FOOTER END -->

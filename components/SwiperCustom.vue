@@ -30,7 +30,7 @@ onMounted(() => {
     </swiper-container>
 
     <button class="w-1/12" @click="swiper.next()">
-      <font-awesome :style="{color: '#d3338b'}" #d3338b" icon="chevron-right" class="fa-4x" />
+      <font-awesome :style="{color: '#d3338b'}" icon="chevron-right" class="fa-4x" />
     </button>
   </div>
 </template>

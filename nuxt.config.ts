@@ -14,6 +14,7 @@ export default defineNuxtConfig({
   fontawesome: {
     icons: {
       solid: ['chevron-left', 'chevron-right'],
+      brands: ['instagram', 'square-facebook'],
     }
   }
 });
