@@ -14,7 +14,7 @@
             onmouseover="this.style.backgroundColor='#fff'; this.style.color='#D4338B';"
             onmouseout="this.style.backgroundColor='#D4338B'; this.style.color='#fff';"
             style="border: #D4338B solid 1px; width: 200px; background-color: #D4338B; color: #fff; transition: all 0.3s ease;"
-            to="">
+            to="#products">
             Nos produits
           </NuxtLink>
 
@@ -22,7 +22,7 @@
             class="rounded-4xl text-md uppercase py-4 px-10 no-underline flex justify-center lg:ms-10"
             onmouseover="this.style.backgroundColor='#D4338B'; this.style.color='#fff';"
             onmouseout="this.style.backgroundColor='#fff'; this.style.color='#D4338B';"
-            style="border: #D4338B solid 1px; width: 200px; color: #D4338B; transition: all 0.3s ease;" to="">
+            style="border: #D4338B solid 1px; width: 200px; color: #D4338B; transition: all 0.3s ease;" to="#contact">
             Contactez-nous
           </NuxtLink>
         </div>
