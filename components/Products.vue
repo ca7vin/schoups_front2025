@@ -20,7 +20,7 @@
           <div
             class="absolute inset-0 bg-[#D4338B]/80 flex items-center justify-center rounded-2xl transition-opacity duration-300 opacity-0 group-hover:opacity-100"
           >
-            <span class="text-white text-2xl font-semibold">{{ product.gout }}</span>
+            <span class="text-white text-4xl font-semibold">{{ product.gout }}</span>
           </div>
         </div>
       </div>
@@ -41,26 +41,26 @@
             &times;
           </button>
 
-          <h3 class="text-2xl font-bold mb-4 text-[#D4338B]">
+          <h3 class="text-4xl font-bold mb-4 text-[#D4338B]">
             {{ selectedProduct.gout }}
           </h3>
 
           <img :src="selectedProduct.image" :alt="selectedProduct.gout" class="w-full h-auto rounded-lg mb-4" />
 
           <div class="mb-6">
-            <h4 class="text-lg font-semibold mb-2">Ingrédients</h4>
+            <h4 class="text-2xl font-semibold mb-2">Ingrédients</h4>
             <p>{{ selectedProduct.ingredients.join(', ') }}</p>
           </div>
 
           <div>
-            <h4 class="text-lg font-semibold mb-2">Valeurs nutritionnelles (pour 100g)</h4>
+            <h4 class="text-2xl font-semibold mb-2">Valeurs nutritionnelles (pour 100g)</h4>
             <div class="space-y-4">
               <div>
-                <p class="font-medium text-sm mb-1">Énergie : {{ selectedProduct.nutrition.energie.kj }} kJ - {{ selectedProduct.nutrition.energie.kcal }} kcal</p>
+                <p class="font-medium text-lg mb-1">Énergie : {{ selectedProduct.nutrition.energie.kj }} kJ - {{ selectedProduct.nutrition.energie.kcal }} kcal</p>
               </div>
 
               <div v-for="(value, key) in barData" :key="key">
-                <p class="text-sm font-medium mb-1">{{ labels[key] }} : {{ value }}{{ units[key] }}</p>
+                <p class="text-lg font-medium mb-1">{{ labels[key] }} : {{ value }}{{ units[key] }}</p>
                 <div class="w-full bg-gray-200 rounded-full h-2.5">
                   <div
                     class="bg-[#D4338B] h-2.5 rounded-full"
