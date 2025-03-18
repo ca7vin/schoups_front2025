@@ -15,7 +15,7 @@
           <transition name="fade">
             <div v-if="hoveredIndex === index"
               class="absolute inset-0 w-full min-w-full bg-[#D4338B]/80 flex flex-col items-center justify-center rounded-2xl border-2 border-white">
-              <span class="text-white text-7xl font-semibold">{{ product.gout }}</span>
+              <span class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-semibold">{{ product.gout }}</span>
               <span class="text-white text-2xl mt-5">+ d'infos</span>
             </div>
           </transition>
