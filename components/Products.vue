@@ -15,7 +15,8 @@
           <transition name="fade">
             <div v-if="hoveredIndex === index"
               class="absolute inset-0 w-full min-w-full bg-[#D4338B]/80 flex flex-col items-center justify-center rounded-2xl border-2 border-white">
-              <span class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-semibold">{{ product.gout }}</span>
+              <span class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-semibold">{{ product.gout
+                }}</span>
               <span class="text-white text-2xl mt-5">+ d'infos</span>
             </div>
           </transition>
@@ -74,83 +75,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue';
 
-const hoveredIndex = ref<number | null>(null)
-const hoverTimeout = ref<number | null>(null)
-const isDesktop = ref(false)
-
-onMounted(() => {
-  const updateDeviceType = () => {
-    isDesktop.value = window.innerWidth >= 1024
-  }
-  updateDeviceType()
-  window.addEventListener('resize', updateDeviceType)
-})
-
-onUnmounted(() => {
-  clearHoverTimeout()
-})
-
-const handleProductClick = (index: number) => {
-
-    if (hoveredIndex.value === index) {
-      openDrawer(index)
-      clearHoverTimeout()
-    } else {
-      hoveredIndex.value = index
-      resetHoverTimeout()
-    }
-
-}
-
-
-const resetHoverTimeout = () => {
-  clearHoverTimeout()
-  hoverTimeout.value = window.setTimeout(() => {
-    hoveredIndex.value = null
-  }, 2000)
-}
-
-const clearHoverTimeout = () => {
-  if (hoverTimeout.value !== null) {
-    clearTimeout(hoverTimeout.value)
-    hoverTimeout.value = null
-  }
-}
-
-const selectedProduct = ref<Product | null>(null)
-
-const openDrawer = (index: number) => {
-  selectedProduct.value = products.value[index]
-}
-
-const closeDrawer = () => {
-  selectedProduct.value = null
-  resetHoverTimeout()
-}
-
-// TYPES
-type Nutrition = {
-  energie: { kj: number; kcal: number };
-  matieresGrasses: number;
-  acidesGrasSatures: number;
-  glucides: number;
-  sucres: number;
-  proteines: number;
-  fibres: number;
-  sel: number;
-}
-
-type Product = {
-  gout: string;
-  image: string;
-  ingredients: string[];
-  nutrition: Nutrition;
-}
+const hoveredIndex = ref<number | null>(null);
+const hoverTimeout = ref<number | null>(null);
+const isDesktop = ref(false);
+const savedScrollPosition = ref(0);
 
 const products = ref<Product[]>([
   {
+    id: 1,
     gout: 'Fraise',
     image: 'https://placehold.co/600x400',
     ingredients: ['Lait', 'Sucre', 'Fraise', 'Crème'],
@@ -166,6 +100,7 @@ const products = ref<Product[]>([
     }
   },
   {
+    id: 2,
     gout: 'Fraise',
     image: 'https://placehold.co/600x400',
     ingredients: ['Lait', 'Sucre', 'Fraise', 'Crème'],
@@ -181,6 +116,7 @@ const products = ref<Product[]>([
     }
   },
   {
+    id: 3,
     gout: 'Fraise',
     image: 'https://placehold.co/600x400',
     ingredients: ['Lait', 'Sucre', 'Fraise', 'Crème'],
@@ -196,6 +132,7 @@ const products = ref<Product[]>([
     }
   },
   {
+    id: 4,
     gout: 'Fraise',
     image: 'https://placehold.co/600x400',
     ingredients: ['Lait', 'Sucre', 'Fraise', 'Crème'],
@@ -211,6 +148,7 @@ const products = ref<Product[]>([
     }
   },
   {
+    id: 5,
     gout: 'Fraise',
     image: 'https://placehold.co/600x400',
     ingredients: ['Lait', 'Sucre', 'Fraise', 'Crème'],
@@ -226,6 +164,7 @@ const products = ref<Product[]>([
     }
   },
   {
+    id: 6,
     gout: 'Fraise',
     image: 'https://placehold.co/600x400',
     ingredients: ['Lait', 'Sucre', 'Fraise', 'Crème'],
@@ -243,6 +182,94 @@ const products = ref<Product[]>([
   // Ajoute d'autres produits ici
 ])
 
+const openDrawer = (index: number) => {
+  // Sauvegarder la position du scroll avant l'ouverture du drawer
+  savedScrollPosition.value = window.scrollY;
+  selectedProduct.value = products.value[index];
+};
+
+onMounted(() => {
+  const updateDeviceType = () => {
+    isDesktop.value = window.innerWidth >= 1024;
+  };
+  updateDeviceType();
+  window.addEventListener('resize', updateDeviceType);
+
+  // Vérification du hash au chargement de la page
+  nextTick(() => {
+    const hash = window.location.hash;
+    if (hash && hash.startsWith('#product-')) {
+      const productId = parseInt(hash.replace('#product-', ''), 10);
+      const productIndex = products.value.findIndex(product => product.id === productId);
+      if (productIndex !== -1) {
+        openDrawer(productIndex);
+      }
+    }
+  });
+});
+
+const handleProductClick = (index: number) => {
+  const product = products.value[index];
+
+  if (hoveredIndex.value === index) {
+    openDrawer(index);
+    clearHoverTimeout();
+  } else {
+    hoveredIndex.value = index;
+    resetHoverTimeout();
+
+    // Mettre à jour l'URL avec l'ID du produit
+    window.location.hash = `#product-${product.id}`;
+  }
+};
+
+const resetHoverTimeout = () => {
+  clearHoverTimeout();
+  hoverTimeout.value = window.setTimeout(() => {
+    hoveredIndex.value = null;
+  }, 2000);
+};
+
+const clearHoverTimeout = () => {
+  if (hoverTimeout.value !== null) {
+    clearTimeout(hoverTimeout.value);
+    hoverTimeout.value = null;
+  }
+};
+
+const selectedProduct = ref<Product | null>(null);
+
+const closeDrawer = () => {
+  selectedProduct.value = null;
+  resetHoverTimeout();
+
+  // Réinitialiser l'URL en enlevant le hash
+  window.location.hash = '#products';
+
+  // Restaurer la position du scroll
+  window.scrollTo(0, savedScrollPosition.value);
+};
+
+// TYPES
+type Nutrition = {
+  energie: { kj: number; kcal: number };
+  matieresGrasses: number;
+  acidesGrasSatures: number;
+  glucides: number;
+  sucres: number;
+  proteines: number;
+  fibres: number;
+  sel: number;
+};
+
+type Product = {
+  id: number;
+  gout: string;
+  image: string;
+  ingredients: string[];
+  nutrition: Nutrition;
+};
+
 const labels: Record<string, string> = {
   matieresGrasses: 'Matières grasses',
   acidesGrasSatures: 'Acides gras saturés',
@@ -250,8 +277,8 @@ const labels: Record<string, string> = {
   sucres: 'Dont sucres',
   proteines: 'Protéines',
   fibres: 'Fibres',
-  sel: 'Sel'
-}
+  sel: 'Sel',
+};
 
 const units: Record<string, string> = {
   matieresGrasses: 'g',
@@ -260,8 +287,8 @@ const units: Record<string, string> = {
   sucres: 'g',
   proteines: 'g',
   fibres: 'g',
-  sel: 'g'
-}
+  sel: 'g',
+};
 
 const maxValues: Record<string, number> = {
   matieresGrasses: 30,
@@ -270,12 +297,12 @@ const maxValues: Record<string, number> = {
   sucres: 50,
   proteines: 20,
   fibres: 10,
-  sel: 2
-}
+  sel: 2,
+};
 
 const barData = computed(() => {
-  if (!selectedProduct.value) return {}
-  const n = selectedProduct.value.nutrition
+  if (!selectedProduct.value) return {};
+  const n = selectedProduct.value.nutrition;
   return {
     matieresGrasses: n.matieresGrasses,
     acidesGrasSatures: n.acidesGrasSatures,
@@ -283,10 +310,11 @@ const barData = computed(() => {
     sucres: n.sucres,
     proteines: n.proteines,
     fibres: n.fibres,
-    sel: n.sel
-  }
-})
+    sel: n.sel,
+  };
+});
 </script>
+
 
 <style scoped>
 .slide-right-enter-active,

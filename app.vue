@@ -3,17 +3,23 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 import About from './components/About.vue';
 
 const menuOpen = ref(false);
-const isMobile = computed(() => window.innerWidth <= 768 || (window.innerWidth <= 820 && window.innerWidth > 768));
+const isMobile = ref(false);
+
+const checkIsMobile = () => {
+  isMobile.value = window.innerWidth <= 820;
+};
 
 const toggleMenu = () => {
   menuOpen.value = !menuOpen.value;
 };
 
 const resizeHandler = () => {
-  menuOpen.value = false; // Pour fermer le menu si l'écran est redimensionné
+  checkIsMobile();
+  menuOpen.value = false; // Ferme le menu en cas de resize
 };
 
 onMounted(() => {
+  checkIsMobile();
   window.addEventListener('resize', resizeHandler);
 });
 
@@ -22,17 +28,50 @@ onUnmounted(() => {
 });
 </script>
 
+
 <template>
   <div>
-    <!-- HEADER WITH NAVIGATION -->
-    <header id="header" class="xyz-in navbar" xyz="fade up big">
-      <button id="navButton" @click="toggleMenu" class="menu-button" v-if="isMobile">
+    <!-- HEADER -->
+    <header id="header" class="navbar">
+      <!-- BOUTON MENU MOBILE -->
+      <button v-if="isMobile" @click="toggleMenu" class="menu-button">
         <font-awesome :icon="['fas', 'bars']" size="lg" />
       </button>
-      <!-- NAVIGATION START -->
-      <nav id="navbar" :class="{ 'menu-open': menuOpen, 'menu': !menuOpen }">
+
+      <!-- MENU MOBILE AVEC LOGO ET ANIMATION -->
+      <transition name="fade-slide">
+        <div
+          v-if="menuOpen && isMobile"
+          class="mobile-nav sticky top-[60px] bg-[#D4338B] z-40 w-full px-4 py-6 shadow-md transform transition-all duration-300"
+        >
+          <!-- Logo mobile -->
+          <div class="flex justify-center mb-4">
+            <NuxtLink class="flex justify-center" to="#hero" @click="toggleMenu">
+              <img src="./public/images/logo-navbar.png" class="w-1/2" alt="Logo" />
+            </NuxtLink>
+          </div>
+
+          <!-- Liens -->
+          <ul class="flex flex-col items-center space-y-4">
+            <li>
+              <NuxtLink class="text-white text-xs uppercase hover:underline navFont" to="#hero" @click="toggleMenu">Accueil</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink class="text-white text-xs uppercase hover:underline navFont" to="#about" @click="toggleMenu">Qui sommes-nous</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink class="text-white text-xs uppercase hover:underline navFont" to="#products" @click="toggleMenu">Nos produits</NuxtLink>
+            </li>
+            <li>
+              <NuxtLink class="text-white text-xs uppercase hover:underline navFont" to="#contact" @click="toggleMenu">Contact</NuxtLink>
+            </li>
+          </ul>
+        </div>
+      </transition>
+
+      <!-- MENU DESKTOP -->
+      <nav v-if="!isMobile" id="navbar" class="w-full">
         <ul class="flex items-center px-5" style="background-color: #D4338B; height: 80px;">
-          <!-- LOGO -->
           <div class="flex flex-col items-center lg:w-2/5">
             <li class="lg:uppercase text-white font-bold text-xl ps-10">
               <NuxtLink id="logoContainer" class="no-underline">
@@ -56,49 +95,32 @@ onUnmounted(() => {
           </div>
         </ul>
       </nav>
-      <!-- NAVIGATION END -->
     </header>
 
-    <!-- SECT 1 - HERO START -->
+    <!-- SECTIONS -->
     <Hero />
-    <!-- SECT 1 - HERO END -->
-    <!-- SECT 2 - ABOUT START -->
     <About />
-    <!-- SECT 2 - ABOUT END -->
-    <!-- SECT 3 - PARTNERS START -->
     <Partners />
-    <!-- SECT 3 - PARTNERS END -->
-    <!-- SECT 4 - PRODUCTS START -->
     <Products />
-    <!-- SECT 4 - PRODUCTS END -->
-    <!-- SECT 5 - CONTACT START -->
     <Contact />
-    <!-- SECT 5 - CONTACT END -->
-    <!-- FOOTER START -->
+
+    <!-- FOOTER -->
     <footer class="mt-10">
       <div class="flex flex-col items-center justify-center bg-[#D4338B] py-8 px-4 sm:px-8">
-
-        <!-- Logo -->
-        <img src="./public/images/logo-footer.png" class="w-2/3 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-4"
-          alt="Logo Footer" />
-
-        <!-- Réseaux sociaux -->
+        <img src="./public/images/logo-footer.png" class="w-2/3 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-4" alt="Logo Footer" />
         <div class="flex gap-6 mt-2 mb-4">
-          <font-awesome :style="{color: '#fff'}" :icon="['fab', 'instagram']" class="fa-2x" />
-          <font-awesome :style="{color: '#fff'}" :icon="['fab', 'square-facebook']" class="fa-2x" />
+          <font-awesome :style="{ color: '#fff' }" :icon="['fab', 'instagram']" class="fa-2x" />
+          <font-awesome :style="{ color: '#fff' }" :icon="['fab', 'square-facebook']" class="fa-2x" />
         </div>
-
-        <!-- Crédit -->
         <p class="text-white text-xs text-center uppercase px-4">
           © Calvin Van der Ghinst – Conception et mise en page du site
         </p>
-
       </div>
     </footer>
-
-    <!-- FOOTER END -->
   </div>
 </template>
+
+
 
 <style scoped>
 #header {
@@ -107,95 +129,39 @@ onUnmounted(() => {
   z-index: 50;
 }
 
-section {
-  scroll-margin-top: 80px;
-  /* même hauteur que ta navbar */
-}
-
-/* Responsive Menu Styles */
+/* Mobile Menu Button */
 .menu-button {
-  display: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  background-color: #D4338B;
+  color: white;
+  height: 60px;
 }
 
-.navbar {
-  position: relative;
-  z-index: 9999;
+/* Sticky mobile nav */
+.mobile-nav {
+  z-index: 40;
 }
 
-@media screen and (max-width: 820px) {
-  #header {
-    margin-bottom: 20px;
-    position: relative;
-    z-index: 1;
-  }
-
-  .menu {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.3s ease-out;
-  }
-
-  .menu-open {
-    max-height: 500px;
-    transition: max-height 0.3s ease-in;
-  }
-
-  .menu-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    background-color: #D4338B;
-    color: white;
-    height: 60px;
-  }
-
-  nav ul {
-    display: none;
-  }
-
-  .menu-open nav ul {
-    display: flex;
-    flex-direction: column;
-    transition: height 3s ease;
-  }
-
-  .menu-open {
-    display: block !important;
-  }
-
-  nav ul {
-    height: 400px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-  }
-
-  nav ul div {
-    width: 100% !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    align-items: center !important;
-  }
-
-  nav ul div li {
-    margin: 10px 0 !important;
-    padding: 0 !important;
-  }
-
-  #logoContainer {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 10px;
-  }
+section {
+  scroll-margin-top: 80px; /* Pour les ancres */
 }
 
-@media screen and (max-width: 768px) {
-  nav ul {
-    height: 400px !important;
-  }
+.fade-slide-enter-active,
+.fade-slide-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.fade-slide-enter-from,
+.fade-slide-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+.fade-slide-enter-to,
+.fade-slide-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
+
