@@ -1,25 +1,42 @@
 <template>
-  <section id="about" class="bg-[#D4338B] max-h-screen overflow-hidden">
+  <section
+    v-if="bannerAbout"
+    id="about"
+    class="bg-[#D4338B] max-h-screen overflow-hidden"
+  >
     <div class="flex flex-col-reverse lg:flex-row w-full h-screen items-center">
       <!-- Image en background -->
-      <div id="aboutImg" class="w-full lg:w-1/2 h-full bg-no-repeat bg-center bg-cover"
-        style="background-image: url('/images/hero1.png');"></div>
+      <div
+        class="w-full lg:w-1/2 h-full bg-no-repeat bg-center bg-cover"
+        :style="bannerAbout.image ? `background-image: url('${bannerAbout.image}')` : ''"
+      ></div>
 
       <!-- Texte -->
       <div id="aboutText" class="w-full p-5 lg:w-1/2 px-6 xl:px-24 2xl:px-32 text-center lg:text-left">
         <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl mb-6 lg:mb-10 text-white">
-          Qui sommes-nous ?
+          <span v-html="bannerAbout.title" />
         </h2>
         <p class="text-sm sm:text-base lg:text-lg mb-6 text-white">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ex repellendus voluptate porro assumenda doloremque
-          quibusdam, consequatur amet repellat aliquid et excepturi cupiditate quo? Debitis, repellat? Sapiente velit
-          accusantium ut eius voluptate tempore, repudiandae, numquam autem rem impedit incidunt accusamus quam porro
-          tempora consequuntur assumenda vero nemo eum? Accusamus earum rem suscipit tempore! Totam sint aut expedita
-          laboriosam, neque eveniet accusantium!
+          <span v-html="bannerAbout.text" />
         </p>
       </div>
     </div>
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+
+// Refs pour le contenu dynamique
+const bannerAbout = ref<{ title: string; text: string; image: string } | null>(null)
+
+onMounted(async () => {
+  try {
+    const response = await fetch('http://127.0.0.1:8000/api/onepagecontent')
+    const data = await response.json()
+    bannerAbout.value = data.banner_about
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données hero:', error)
+  }
+})
+</script>

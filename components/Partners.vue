@@ -10,8 +10,8 @@
 
         <!-- Swiper Container -->
         <swiper-container class="w-10/12 sm:w-10/12 md:w-10/12" ref="containerRef">
-          <swiper-slide v-for="(slide, idx) in slides" :key="idx" style="background-color: #fff; color: #d3338b;">
-            <img :src="`/images/logo-partner${slide}.png`" :alt="`Slide ${slide}`"
+          <swiper-slide v-for="(partner, idx) in partners" :key="idx" style="background-color: #fff; color: #d3338b;">
+            <img :src="partner.image" :alt="`image ${partner.nom}`"
               class="object-cover w-2/3 sm:w-1/3 md:w-1/2 lg:w-1/2 xl:w-1/4 " />
           </swiper-slide>
         </swiper-container>
@@ -26,14 +26,33 @@
 </template>
 
 <script setup lang="ts">
-const containerRef = ref(null)
-const slides = ref(Array.from({ length: 3 }, (_, i) => i + 1)) // [1, 2, ..., 10]
+import { ref, onMounted } from 'vue';
 
-const swiper = useSwiper(containerRef)
+const containerRef = ref(null);
+const partners = ref<Array<{ nom: string, image: string }>>([]);
 
-onMounted(() => {
-  // You can do stuff here later if needed
-})
+// Récupérer les partenaires depuis l'API
+onMounted(async () => {
+  try {
+    const response = await fetch('http://127.0.0.1:8000/api/onepagecontent');
+    const data = await response.json();
+
+    // Vérifier que la réponse contient un tableau de partenaires
+    if (Array.isArray(data.partners)) {
+      partners.value = data.partners.map((partner: any) => ({
+        nom: partner.nom,
+        image: partner.image, // Assurez-vous que le champ est correct dans votre API
+      }));
+    } else {
+      console.error("Le champ 'partners' est manquant ou n'est pas un tableau.");
+    }
+  } catch (error) {
+    console.error('Erreur lors du chargement des partenaires:', error);
+  }
+});
+
+const swiper = useSwiper(containerRef);
+
 </script>
 
 <style scoped>
@@ -43,25 +62,18 @@ swiper-slide {
   align-items: center;
   font-size: 18px;
   height: 40vh;
-  /* augmenté pour les images */
   font-size: 4rem;
   overflow: hidden;
 }
 
 /* Responsive design adjustments */
 @media screen and (max-width: 767px) {
-  /* #partners {
-    padding: 20px;
-  } */
-
   .fa-4x {
     display: none;
-    /* Make the arrows smaller on mobile */
   }
 
   .swiper-slide img {
     width: 70%;
-    /* Make images more responsive on small screens */
   }
 }
 
@@ -72,14 +84,12 @@ swiper-slide {
 
   .swiper-slide img {
     width: 50%;
-    /* Make images a bit larger on tablet */
   }
 }
 
 @media screen and (min-width: 1025px) {
   .swiper-slide img {
     width: 25%;
-    /* Normal size on larger screens */
   }
 }
 </style>

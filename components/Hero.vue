@@ -4,12 +4,15 @@
     class="w-full max-h-screen h-screen flex flex-col lg:flex-row items-center justify-center overflow-hidden"
   >
     <!-- Texte -->
-    <div class="w-full lg:w-1/2 pt-5 px-6 xl:px-24 2xl:px-32 mb-8 lg:mb-0 text-center lg:text-left">
+    <div
+      v-if="bannerHero"
+      class="w-full lg:w-1/2 pt-5 px-6 xl:px-24 2xl:px-32 mb-8 lg:mb-0 text-center lg:text-left"
+    >
       <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl mb-6 text-[#D4338B]">
-        De vraies glaces <br /> artisanales
+        <span v-html="bannerHero.title" />
       </h1>
       <p class="text-sm sm:text-base lg:text-lg mb-6 text-[#D4338B]">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Velit expedita, enim aspernatur voluptatibus pariatur atque. Voluptatum explicabo possimus repellat necessitatibus.
+        <span v-html="bannerHero.text" />
       </p>
       <div class="flex flex-col lg:flex-row items-center justify-start mt-6 lg:mt-10">
         <NuxtLink
@@ -33,9 +36,24 @@
     <!-- Image en background -->
     <div
       class="w-full lg:w-1/2 h-full bg-no-repeat bg-center bg-cover"
-      style="background-image: url('/images/Hero1.png');"
+      :style="bannerHero?.image ? `background-image: url('${bannerHero.image}')` : ''"
     ></div>
   </section>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, onMounted } from 'vue'
+
+// Refs pour le contenu dynamique
+const bannerHero = ref<{ title: string; text: string; image: string } | null>(null)
+
+onMounted(async () => {
+  try {
+    const response = await fetch('http://127.0.0.1:8000/api/onepagecontent')
+    const data = await response.json()
+    bannerHero.value = data.banner_hero
+  } catch (error) {
+    console.error('Erreur lors de la récupération des données hero:', error)
+  }
+})
+</script>

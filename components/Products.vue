@@ -58,8 +58,8 @@
               <div v-for="(value, key) in barData" :key="key">
                 <p class="text-lg font-medium mb-1">{{ labels[key] }} : {{ value }}{{ units[key] }}</p>
                 <div class="w-full bg-gray-200 rounded-full h-2.5">
-                  <div class="bg-[#D4338B] h-2.5 rounded-full"
-                    :style="{ width: `${(value / maxValues[key]) * 100}%` }" />
+                  <div class="bg-[#D4338B] h-2.5 rounded-full bar-fill"
+                    :style="{ width: animateBars ? `${(value / maxValues[key]) * 100}%` : '0%' }" />
                 </div>
               </div>
             </div>
@@ -77,137 +77,62 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick } from 'vue';
 
+const products = ref<Product[]>([]);
 const hoveredIndex = ref<number | null>(null);
 const hoverTimeout = ref<number | null>(null);
 const isDesktop = ref(false);
 const savedScrollPosition = ref(0);
+const animateBars = ref(false);
+const selectedProduct = ref<Product | null>(null);
 
-const products = ref<Product[]>([
-  {
-    id: 1,
-    gout: 'Fraise',
-    image: 'https://placehold.co/600x400',
-    ingredients: ['Lait', 'Sucre', 'Fraise', 'Crème'],
-    nutrition: {
-      energie: { kj: 894, kcal: 212 },
-      matieresGrasses: 9.34,
-      acidesGrasSatures: 5.38,
-      glucides: 27.85,
-      sucres: 25.79,
-      proteines: 4.31,
-      fibres: 0,
-      sel: 0.16
-    }
-  },
-  {
-    id: 2,
-    gout: 'Fraise',
-    image: 'https://placehold.co/600x400',
-    ingredients: ['Lait', 'Sucre', 'Fraise', 'Crème'],
-    nutrition: {
-      energie: { kj: 894, kcal: 212 },
-      matieresGrasses: 9.34,
-      acidesGrasSatures: 5.38,
-      glucides: 27.85,
-      sucres: 25.79,
-      proteines: 4.31,
-      fibres: 0,
-      sel: 0.16
-    }
-  },
-  {
-    id: 3,
-    gout: 'Fraise',
-    image: 'https://placehold.co/600x400',
-    ingredients: ['Lait', 'Sucre', 'Fraise', 'Crème'],
-    nutrition: {
-      energie: { kj: 894, kcal: 212 },
-      matieresGrasses: 9.34,
-      acidesGrasSatures: 5.38,
-      glucides: 27.85,
-      sucres: 25.79,
-      proteines: 4.31,
-      fibres: 0,
-      sel: 0.16
-    }
-  },
-  {
-    id: 4,
-    gout: 'Fraise',
-    image: 'https://placehold.co/600x400',
-    ingredients: ['Lait', 'Sucre', 'Fraise', 'Crème'],
-    nutrition: {
-      energie: { kj: 894, kcal: 212 },
-      matieresGrasses: 9.34,
-      acidesGrasSatures: 5.38,
-      glucides: 27.85,
-      sucres: 25.79,
-      proteines: 4.31,
-      fibres: 0,
-      sel: 0.16
-    }
-  },
-  {
-    id: 5,
-    gout: 'Fraise',
-    image: 'https://placehold.co/600x400',
-    ingredients: ['Lait', 'Sucre', 'Fraise', 'Crème'],
-    nutrition: {
-      energie: { kj: 894, kcal: 212 },
-      matieresGrasses: 9.34,
-      acidesGrasSatures: 5.38,
-      glucides: 27.85,
-      sucres: 25.79,
-      proteines: 4.31,
-      fibres: 0,
-      sel: 0.16
-    }
-  },
-  {
-    id: 6,
-    gout: 'Fraise',
-    image: 'https://placehold.co/600x400',
-    ingredients: ['Lait', 'Sucre', 'Fraise', 'Crème'],
-    nutrition: {
-      energie: { kj: 894, kcal: 212 },
-      matieresGrasses: 9.34,
-      acidesGrasSatures: 5.38,
-      glucides: 27.85,
-      sucres: 25.79,
-      proteines: 4.31,
-      fibres: 0,
-      sel: 0.16
-    }
-  },
-  // Ajoute d'autres produits ici
-])
+// Appel à l'API pour récupérer les produits
+onMounted(async () => {
+  try {
+    const response = await fetch('http://127.0.0.1:8000/api/onepagecontent');
+    const data = await response.json();
 
-const openDrawer = (index: number) => {
-  // Sauvegarder la position du scroll avant l'ouverture du drawer
-  savedScrollPosition.value = window.scrollY;
-  selectedProduct.value = products.value[index];
-};
+    // Vérification que les produits existent dans le champ 'glaces'
+    if (Array.isArray(data.glaces)) {
+      products.value = data.glaces;
+    } else {
+      console.error("Le champ 'glaces' est manquant ou n'est pas un tableau.");
+    }
 
-onMounted(() => {
-  const updateDeviceType = () => {
-    isDesktop.value = window.innerWidth >= 1024;
-  };
-  updateDeviceType();
-  window.addEventListener('resize', updateDeviceType);
+    // Vérification de la taille de l'écran (responsive)
+    const updateDeviceType = () => {
+      isDesktop.value = window.innerWidth >= 1024;
+    };
+    updateDeviceType();
+    window.addEventListener('resize', updateDeviceType);
 
-  // Vérification du hash au chargement de la page
-  nextTick(() => {
-    const hash = window.location.hash;
-    if (hash && hash.startsWith('#product-')) {
-      const productId = parseInt(hash.replace('#product-', ''), 10);
-      const productIndex = products.value.findIndex(product => product.id === productId);
-      if (productIndex !== -1) {
-        openDrawer(productIndex);
+    // Vérification du hash au chargement pour afficher un produit spécifique
+    nextTick(() => {
+      const hash = window.location.hash;
+      if (hash.startsWith('#product-')) {
+        const productId = parseInt(hash.replace('#product-', ''), 10);
+        const productIndex = products.value.findIndex(product => product.id === productId);
+        if (productIndex !== -1) openDrawer(productIndex);
       }
-    }
-  });
+    });
+  } catch (error) {
+    console.error('Erreur lors du chargement des produits:', error);
+  }
 });
 
+const openDrawer = async (index: number) => {
+  savedScrollPosition.value = window.scrollY;
+  selectedProduct.value = products.value[index];
+
+  await nextTick(); // Attendre que le DOM soit mis à jour
+  animateBars.value = false;
+
+  // Petit délai pour permettre à Vue de réinitialiser les barres
+  setTimeout(() => {
+    animateBars.value = true;
+  }, 50);
+};
+
+// Gestion du clic sur un produit
 const handleProductClick = (index: number) => {
   const product = products.value[index];
 
@@ -223,6 +148,7 @@ const handleProductClick = (index: number) => {
   }
 };
 
+// Gestion du délai d'affichage de l'info produit
 const resetHoverTimeout = () => {
   clearHoverTimeout();
   hoverTimeout.value = window.setTimeout(() => {
@@ -237,8 +163,7 @@ const clearHoverTimeout = () => {
   }
 };
 
-const selectedProduct = ref<Product | null>(null);
-
+// Fermeture du drawer
 const closeDrawer = () => {
   selectedProduct.value = null;
   resetHoverTimeout();
@@ -291,15 +216,16 @@ const units: Record<string, string> = {
 };
 
 const maxValues: Record<string, number> = {
-  matieresGrasses: 30,
-  acidesGrasSatures: 20,
-  glucides: 50,
-  sucres: 50,
-  proteines: 20,
-  fibres: 10,
-  sel: 2,
+  matieresGrasses: 100,
+  acidesGrasSatures: 100,
+  glucides: 100,
+  sucres: 100,
+  proteines: 100,
+  fibres: 100,
+  sel: 100,
 };
 
+// Calcul des valeurs pour les barres de nutrition
 const barData = computed(() => {
   if (!selectedProduct.value) return {};
   const n = selectedProduct.value.nutrition;
@@ -314,6 +240,7 @@ const barData = computed(() => {
   };
 });
 </script>
+
 
 
 <style scoped>
@@ -350,5 +277,9 @@ const barData = computed(() => {
 .fade-enter-to,
 .fade-leave-from {
   opacity: 1;
+}
+
+.bar-fill {
+  transition: width 1s ease-in-out;
 }
 </style>
