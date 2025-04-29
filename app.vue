@@ -107,7 +107,7 @@ onUnmounted(() => {
     <!-- FOOTER -->
     <footer class="mt-10">
       <div class="flex flex-col items-center justify-center bg-[#D4338B] py-8 px-4 sm:px-8">
-        <img src="./public/images/logo-footer.png" class="w-2/3 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5 mb-4" alt="Logo Footer" />
+        <img src="./public/images/logo-footer.png" class="w-2/3 sm:w-1/2 md:w-1/3 lg:w-1/4 xl:w-1/5" alt="Logo Footer" />
         <div class="flex gap-6 mt-2 mb-4">
           <font-awesome :style="{ color: '#fff' }" :icon="['fab', 'instagram']" class="fa-2x" />
           <font-awesome :style="{ color: '#fff' }" :icon="['fab', 'square-facebook']" class="fa-2x" />
