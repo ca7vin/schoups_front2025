@@ -6,7 +6,7 @@ const menuOpen = ref(false);
 const isMobile = ref(false);
 
 const checkIsMobile = () => {
-  isMobile.value = window.innerWidth <= 820;
+  isMobile.value = window.innerWidth <= 860;
 };
 
 const toggleMenu = () => {
@@ -75,7 +75,7 @@ onUnmounted(() => {
           <div class="flex flex-col items-center lg:w-2/5">
             <li class="lg:uppercase text-white font-bold text-xl ps-10">
               <NuxtLink id="logoContainer" class="no-underline">
-                <img id="logoNav" src="./public/images/logo-navbar.png" class="w-2/3 lg:w-1/3 2xl:w-1/4" alt="Logo" />
+                <img id="logoNav" src="./public/images/logo-navbar.png" class="w-2/3 md:w-1/2 lg:w-1/2 2xl:w-1/4" alt="Logo" />
               </NuxtLink>
             </li>
           </div>
