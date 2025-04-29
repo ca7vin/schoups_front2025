@@ -22,7 +22,7 @@ bun install
 
 ## Development Server
 
-Start the development server on `https://schoupsfront2025-production.up.railway.app`:
+Start the development server on `https://schoups25back-production.up.railway.app`:
 
 ```bash
 # npm
