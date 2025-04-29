@@ -1,15 +1,9 @@
 <template>
-  <section
-    v-if="bannerAbout"
-    id="about"
-    class="bg-[#D4338B] max-h-screen overflow-hidden"
-  >
+  <section v-if="bannerAbout" id="about" class="bg-[#D4338B] max-h-screen overflow-hidden">
     <div class="flex flex-col-reverse lg:flex-row w-full h-screen items-center">
       <!-- Image en background -->
-      <div
-        class="w-full lg:w-1/2 h-full bg-no-repeat bg-center bg-cover"
-        :style="bannerAbout.image ? `background-image: url('${bannerAbout.image}')` : ''"
-      ></div>
+      <div class="w-full lg:w-1/2 h-full bg-no-repeat bg-center bg-cover"
+        :style="bannerAbout.image ? `background-image: url('${bannerAbout.image}')` : ''"></div>
 
       <!-- Texte -->
       <div id="aboutText" class="w-full p-5 lg:w-1/2 px-6 xl:px-24 2xl:px-32 text-center lg:text-left">
@@ -32,7 +26,7 @@ const bannerAbout = ref<{ title: string; text: string; image: string } | null>(n
 
 onMounted(async () => {
   try {
-    const response = await fetch('http://127.0.0.1:8000/api/onepagecontent')
+    const response = await fetch('https://schoups25back-production.up.railway.app/api/onepagecontent')
     const data = await response.json()
     bannerAbout.value = data.banner_about
   } catch (error) {

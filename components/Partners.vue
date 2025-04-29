@@ -34,7 +34,7 @@ const partners = ref<Array<{ nom: string, image: string }>>([]);
 // Récupérer les partenaires depuis l'API
 onMounted(async () => {
   try {
-    const response = await fetch('http://127.0.0.1:8000/api/onepagecontent');
+    const response = await fetch('https://schoups25back-production.up.railway.app/api/onepagecontent');
     const data = await response.json();
 
     // Vérifier que la réponse contient un tableau de partenaires

@@ -88,7 +88,7 @@ const selectedProduct = ref<Product | null>(null);
 // Appel à l'API pour récupérer les produits
 onMounted(async () => {
   try {
-    const response = await fetch('http://127.0.0.1:8000/api/onepagecontent');
+    const response = await fetch('https://schoups25back-production.up.railway.app/api/onepagecontent');
     const data = await response.json();
 
     // Vérification que les produits existent dans le champ 'glaces'
