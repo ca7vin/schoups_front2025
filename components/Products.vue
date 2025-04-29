@@ -6,20 +6,19 @@
       </h2>
 
       <div class="flex justify-center mb-10">
-  <div class="relative w-[220px]">
-    <select
-      v-model="selectedCategory"
-      class="appearance-none w-full bg-white text-[#D4338B] px-6 py-4 rounded-xl text-md uppercase font-semibold shadow-sm transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#D4338B]"
-    >
-      <option value="all">Tout</option>
-      <option value="glace">Glace</option>
-      <option value="sorbet">Sorbet</option>
-    </select>
-    <div class="pointer-events-none absolute right-5 top-1/2 transform -translate-y-1/2 text-[#D4338B] group-hover:text-white">
-      ▼
-    </div>
-  </div>
-</div>
+        <div class="relative w-[220px]">
+          <select v-model="selectedCategory"
+            class="appearance-none w-full bg-white text-[#D4338B] px-6 py-4 rounded-xl text-md uppercase font-semibold shadow-sm transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#D4338B]">
+            <option value="all">Tout</option>
+            <option value="glace">Glace</option>
+            <option value="sorbet">Sorbet</option>
+          </select>
+          <div
+            class="pointer-events-none absolute right-5 top-1/2 transform -translate-y-1/2 text-[#D4338B] group-hover:text-white">
+            ▼
+          </div>
+        </div>
+      </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 md:px-8 lg:px-12 pb-10">
         <div v-for="(product, index) in filteredProducts" :key="index"
@@ -111,7 +110,7 @@ const filteredProducts = computed(() =>
 // Appel à l'API pour récupérer les produits
 onMounted(async () => {
   try {
-    const response = await fetch('http://127.0.0.1:8000/api/onepagecontent');
+    const response = await fetch('https://schoupsfront2025-production.up.railway.app/api/onepagecontent');
     const data = await response.json();
 
     // Vérification que les produits existent dans le champ 'glaces'

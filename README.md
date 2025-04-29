@@ -22,7 +22,7 @@ bun install
 
 ## Development Server
 
-Start the development server on `http://127.0.0.1:8000`:
+Start the development server on `https://schoupsfront2025-production.up.railway.app`:
 
 ```bash
 # npm

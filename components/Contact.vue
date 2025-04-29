@@ -72,7 +72,7 @@ const successMessage = ref("Votre demande a bien été soumise !");
 
 const submitContactForm = async () => {
   try {
-    const response = await fetch('http://127.0.0.1:8000/api/send-email', {
+    const response = await fetch('https://schoupsfront2025-production.up.railway.app/api/send-email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

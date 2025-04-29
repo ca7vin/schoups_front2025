@@ -25,7 +25,7 @@ onMounted(() => {
 
   (async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/onepagecontent');
+      const response = await fetch('https://schoupsfront2025-production.up.railway.app/api/onepagecontent');
       const data = await response.json();
       footer.value = data.footer;
     } catch (error) {
