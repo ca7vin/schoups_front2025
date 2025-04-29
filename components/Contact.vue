@@ -32,7 +32,7 @@
         </div>
 
         <button type="submit"
-          class="self-center w-[200px] py-3 px-6 rounded-xl border-4 border-white bg-white text-[#D4338B] font-semibold uppercase transition-all duration-300 hover:bg-[#D4338B] hover:text-white hover:border-white">
+          class="self-center w-[200px] py-4 px-10 rounded-4xl border border-white bg-white text-[#D4338B] font-semibold uppercase transition-all duration-300 ease-in-out hover:bg-[#D4338B] hover:text-white hover:-translate-y-1 hover:shadow-lg">
           Envoyer
         </button>
 

@@ -1,12 +1,28 @@
 <template>
   <section id="products">
     <div class="bg-[#D4338B]">
-      <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl text-center text-white py-6 md:py-8 xl:mb-10">
+      <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl text-center text-white py-6 md:py-8 xl:mb-5">
         Nos produits
       </h2>
 
+      <div class="flex justify-center mb-10">
+  <div class="relative w-[220px]">
+    <select
+      v-model="selectedCategory"
+      class="appearance-none w-full bg-white text-[#D4338B] px-6 py-4 rounded-xl text-md uppercase font-semibold shadow-sm transition-all duration-300 cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#D4338B]"
+    >
+      <option value="all">Tout</option>
+      <option value="glace">Glace</option>
+      <option value="sorbet">Sorbet</option>
+    </select>
+    <div class="pointer-events-none absolute right-5 top-1/2 transform -translate-y-1/2 text-[#D4338B] group-hover:text-white">
+      ▼
+    </div>
+  </div>
+</div>
+
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 md:px-8 lg:px-12 pb-10">
-        <div v-for="(product, index) in products" :key="index"
+        <div v-for="(product, index) in filteredProducts" :key="index"
           class="relative group cursor-pointer overflow-hidden rounded-2xl" @click="handleProductClick(index)">
           <img :src="product.image"
             class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
@@ -35,7 +51,7 @@
           </button>
 
           <h3 class="text-4xl font-bold mb-4 text-[#D4338B]">
-            {{ selectedProduct.gout }}
+            {{ selectedProduct.gout }} ({{ selectedProduct.categorie }})
           </h3>
 
           <img :src="selectedProduct.image" :alt="selectedProduct.gout" class="w-full h-auto rounded-lg mb-4" />
@@ -84,6 +100,13 @@ const isDesktop = ref(false);
 const savedScrollPosition = ref(0);
 const animateBars = ref(false);
 const selectedProduct = ref<Product | null>(null);
+  const selectedCategory = ref('all');
+
+const filteredProducts = computed(() =>
+  selectedCategory.value === 'all'
+    ? products.value
+    : products.value.filter((product) => product.categorie.toLowerCase() === selectedCategory.value)
+);
 
 // Appel à l'API pour récupérer les produits
 onMounted(async () => {
@@ -189,6 +212,7 @@ type Nutrition = {
 
 type Product = {
   id: number;
+  categorie: string;
   gout: string;
   image: string;
   ingredients: string[];
