@@ -20,8 +20,10 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 md:px-8 lg:px-12 pb-10">
-        <div v-for="(product, index) in filteredProducts" :key="index"
+      <!-- Grille des produits avec animation -->
+      <TransitionGroup name="fade-list" tag="div"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 px-4 sm:px-6 md:px-8 lg:px-12 pb-10">
+        <div v-for="(product, index) in filteredProducts" :key="product.id"
           class="relative group cursor-pointer overflow-hidden rounded-2xl" @click="handleProductClick(index)">
           <img :src="product.image"
             class="w-full h-auto object-cover transition-transform duration-300 group-hover:scale-105"
@@ -30,13 +32,12 @@
           <transition name="fade">
             <div v-if="hoveredIndex === index"
               class="absolute inset-0 w-full min-w-full bg-[#D4338B]/80 flex flex-col items-center justify-center rounded-2xl border-2 border-white">
-              <span class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-semibold">{{ product.gout
-                }}</span>
+              <span class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-semibold">{{ product.gout }}</span>
               <span class="text-white text-2xl mt-5">+ d'infos</span>
             </div>
           </transition>
         </div>
-      </div>
+      </TransitionGroup>
     </div>
 
     <!-- Drawer -->
@@ -88,6 +89,7 @@
     </transition>
   </section>
 </template>
+
 
 <script setup lang="ts">
 import { ref, computed, onMounted, nextTick } from 'vue';
@@ -304,5 +306,22 @@ const barData = computed(() => {
 
 .bar-fill {
   transition: width 1s ease-in-out;
+}
+
+.fade-list-enter-active,
+.fade-list-leave-active {
+  transition: all 0.4s ease;
+}
+
+.fade-list-enter-from,
+.fade-list-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+.fade-list-enter-to,
+.fade-list-leave-from {
+  opacity: 1;
+  transform: scale(1);
 }
 </style>
