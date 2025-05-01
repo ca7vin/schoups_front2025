@@ -158,16 +158,19 @@ const openDrawer = async (index: number) => {
 
 // Gestion du clic sur un produit
 const handleProductClick = (index: number) => {
-  const product = products.value[index];
+  const product = filteredProducts.value[index];
+
+  if (!product) return;
+
+  const realIndex = products.value.findIndex(p => p.id === product.id);
 
   if (hoveredIndex.value === index) {
-    openDrawer(index);
+    openDrawer(realIndex);
     clearHoverTimeout();
   } else {
     hoveredIndex.value = index;
     resetHoverTimeout();
 
-    // Mettre à jour l'URL avec l'ID du produit
     window.location.hash = `#product-${product.id}`;
   }
 };
