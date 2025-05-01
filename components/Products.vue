@@ -92,136 +92,105 @@
 
 
 <script setup lang="ts">
-import { ref, computed, onMounted, nextTick } from 'vue';
+import { ref, computed, nextTick, watchEffect } from 'vue'
+import { useContent } from '~/composables/useContent'
 
-const products = ref<Product[]>([]);
-const hoveredIndex = ref<number | null>(null);
-const hoverTimeout = ref<number | null>(null);
-const isDesktop = ref(false);
-const savedScrollPosition = ref(0);
-const animateBars = ref(false);
-const selectedProduct = ref<Product | null>(null);
-  const selectedCategory = ref('all');
+const { content } = useContent()
+
+const products = ref<Product[]>([])
+const hoveredIndex = ref<number | null>(null)
+const hoverTimeout = ref<number | null>(null)
+const isDesktop = ref(false)
+const savedScrollPosition = ref(0)
+const animateBars = ref(false)
+const selectedProduct = ref<Product | null>(null)
+const selectedCategory = ref('all')
+
+// ✅ Remplissage des produits à partir du contenu partagé
+watchEffect(() => {
+  if (Array.isArray(content.value?.glaces)) {
+    products.value = content.value.glaces
+  }
+})
 
 const filteredProducts = computed(() =>
   selectedCategory.value === 'all'
     ? products.value
-    : products.value.filter((product) => product.categorie.toLowerCase() === selectedCategory.value)
-);
-
-// Appel à l'API pour récupérer les produits
-onMounted(async () => {
-  try {
-    const response = await fetch('https://schoups25back-production.up.railway.app/api/onepagecontent');
-    const data = await response.json();
-
-    // Vérification que les produits existent dans le champ 'glaces'
-    if (Array.isArray(data.glaces)) {
-      products.value = data.glaces;
-    } else {
-      console.error("Le champ 'glaces' est manquant ou n'est pas un tableau.");
-    }
-
-    // Vérification de la taille de l'écran (responsive)
-    const updateDeviceType = () => {
-      isDesktop.value = window.innerWidth >= 1024;
-    };
-    updateDeviceType();
-    window.addEventListener('resize', updateDeviceType);
-
-    // Vérification du hash au chargement pour afficher un produit spécifique
-    nextTick(() => {
-      const hash = window.location.hash;
-      if (hash.startsWith('#product-')) {
-        const productId = parseInt(hash.replace('#product-', ''), 10);
-        const productIndex = products.value.findIndex(product => product.id === productId);
-        if (productIndex !== -1) openDrawer(productIndex);
-      }
-    });
-  } catch (error) {
-    console.error('Erreur lors du chargement des produits:', error);
-  }
-});
+    : products.value.filter(
+        (product) =>
+          product.categorie.toLowerCase() === selectedCategory.value
+      )
+)
 
 const openDrawer = async (index: number) => {
-  savedScrollPosition.value = window.scrollY;
-  selectedProduct.value = products.value[index];
+  savedScrollPosition.value = window.scrollY
+  selectedProduct.value = products.value[index]
 
-  await nextTick(); // Attendre que le DOM soit mis à jour
-  animateBars.value = false;
+  await nextTick()
+  animateBars.value = false
 
-  // Petit délai pour permettre à Vue de réinitialiser les barres
   setTimeout(() => {
-    animateBars.value = true;
-  }, 50);
-};
+    animateBars.value = true
+  }, 50)
+}
 
-// Gestion du clic sur un produit
 const handleProductClick = (index: number) => {
-  const product = filteredProducts.value[index];
+  const product = filteredProducts.value[index]
+  if (!product) return
 
-  if (!product) return;
-
-  const realIndex = products.value.findIndex(p => p.id === product.id);
+  const realIndex = products.value.findIndex((p) => p.id === product.id)
 
   if (hoveredIndex.value === index) {
-    openDrawer(realIndex);
-    clearHoverTimeout();
+    openDrawer(realIndex)
+    clearHoverTimeout()
   } else {
-    hoveredIndex.value = index;
-    resetHoverTimeout();
-
-    window.location.hash = `#product-${product.id}`;
+    hoveredIndex.value = index
+    resetHoverTimeout()
+    window.location.hash = `#product-${product.id}`
   }
-};
+}
 
-// Gestion du délai d'affichage de l'info produit
 const resetHoverTimeout = () => {
-  clearHoverTimeout();
+  clearHoverTimeout()
   hoverTimeout.value = window.setTimeout(() => {
-    hoveredIndex.value = null;
-  }, 2000);
-};
+    hoveredIndex.value = null
+  }, 2000)
+}
 
 const clearHoverTimeout = () => {
   if (hoverTimeout.value !== null) {
-    clearTimeout(hoverTimeout.value);
-    hoverTimeout.value = null;
+    clearTimeout(hoverTimeout.value)
+    hoverTimeout.value = null
   }
-};
+}
 
-// Fermeture du drawer
 const closeDrawer = () => {
-  selectedProduct.value = null;
-  resetHoverTimeout();
-
-  // Réinitialiser l'URL en enlevant le hash
-  window.location.hash = '#products';
-
-  // Restaurer la position du scroll
-  window.scrollTo(0, savedScrollPosition.value);
-};
+  selectedProduct.value = null
+  resetHoverTimeout()
+  window.location.hash = '#products'
+  window.scrollTo(0, savedScrollPosition.value)
+}
 
 // TYPES
 type Nutrition = {
-  energie: { kj: number; kcal: number };
-  matieresGrasses: number;
-  acidesGrasSatures: number;
-  glucides: number;
-  sucres: number;
-  proteines: number;
-  fibres: number;
-  sel: number;
-};
+  energie: { kj: number; kcal: number }
+  matieresGrasses: number
+  acidesGrasSatures: number
+  glucides: number
+  sucres: number
+  proteines: number
+  fibres: number
+  sel: number
+}
 
 type Product = {
-  id: number;
-  categorie: string;
-  gout: string;
-  image: string;
-  ingredients: string[];
-  nutrition: Nutrition;
-};
+  id: number
+  categorie: string
+  gout: string
+  image: string
+  ingredients: string[]
+  nutrition: Nutrition
+}
 
 const labels: Record<string, string> = {
   matieresGrasses: 'Matières grasses',
@@ -231,7 +200,7 @@ const labels: Record<string, string> = {
   proteines: 'Protéines',
   fibres: 'Fibres',
   sel: 'Sel',
-};
+}
 
 const units: Record<string, string> = {
   matieresGrasses: 'g',
@@ -241,7 +210,7 @@ const units: Record<string, string> = {
   proteines: 'g',
   fibres: 'g',
   sel: 'g',
-};
+}
 
 const maxValues: Record<string, number> = {
   matieresGrasses: 100,
@@ -251,12 +220,11 @@ const maxValues: Record<string, number> = {
   proteines: 100,
   fibres: 100,
   sel: 100,
-};
+}
 
-// Calcul des valeurs pour les barres de nutrition
 const barData = computed(() => {
-  if (!selectedProduct.value) return {};
-  const n = selectedProduct.value.nutrition;
+  if (!selectedProduct.value) return {}
+  const n = selectedProduct.value.nutrition
   return {
     matieresGrasses: n.matieresGrasses,
     acidesGrasSatures: n.acidesGrasSatures,
@@ -265,9 +233,10 @@ const barData = computed(() => {
     proteines: n.proteines,
     fibres: n.fibres,
     sel: n.sel,
-  };
-});
+  }
+})
 </script>
+
 
 
 

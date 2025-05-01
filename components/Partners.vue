@@ -26,33 +26,20 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, computed } from 'vue'
+import { useContent } from '~/composables/useContent'
 
-const containerRef = ref(null);
-const partners = ref<Array<{ nom: string, image: string }>>([]);
+const { content } = useContent()
 
-// Récupérer les partenaires depuis l'API
-onMounted(async () => {
-  try {
-    const response = await fetch('https://schoups25back-production.up.railway.app/api/onepagecontent');
-    const data = await response.json();
+// Option 1 : directement en computed si la transformation est simple
+const partners = computed(() => {
+  if (!Array.isArray(content.value?.partners)) return []
 
-    // Vérifier que la réponse contient un tableau de partenaires
-    if (Array.isArray(data.partners)) {
-      partners.value = data.partners.map((partner: any) => ({
-        nom: partner.nom,
-        image: partner.image, // Assurez-vous que le champ est correct dans votre API
-      }));
-    } else {
-      console.error("Le champ 'partners' est manquant ou n'est pas un tableau.");
-    }
-  } catch (error) {
-    console.error('Erreur lors du chargement des partenaires:', error);
-  }
-});
-
-const swiper = useSwiper(containerRef);
-
+  return content.value.partners.map((partner: any) => ({
+    nom: partner.nom,
+    image: partner.image,
+  }))
+})
 </script>
 
 <style scoped>

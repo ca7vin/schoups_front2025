@@ -1,43 +1,40 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import About from './components/About.vue';
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useContent } from '~/composables/useContent'
 
-const menuOpen = ref(false);
-const isMobile = ref(false);
-const footer = ref<{ facebook: string; instagram: string;} | null>(null)
+const menuOpen = ref(false)
+const isMobile = ref(false)
+const footer = ref<{ facebook: string; instagram: string } | null>(null)
 
 const checkIsMobile = () => {
-  isMobile.value = window.innerWidth <= 860;
-};
+  isMobile.value = window.innerWidth <= 860
+}
 
 const toggleMenu = () => {
-  menuOpen.value = !menuOpen.value;
-};
+  menuOpen.value = !menuOpen.value
+}
 
 const resizeHandler = () => {
-  checkIsMobile();
-  menuOpen.value = false; // Ferme le menu en cas de resize
-};
+  checkIsMobile()
+  menuOpen.value = false
+}
 
-onMounted(() => {
-  checkIsMobile();
-  window.addEventListener('resize', resizeHandler);
+// ✅ Composable de contenu partagé
+const { content, fetchContent } = useContent()
 
-  (async () => {
-    try {
-      const response = await fetch('https://schoups25back-production.up.railway.app/api/onepagecontent');
-      const data = await response.json();
-      footer.value = data.footer;
-    } catch (error) {
-      console.error('Erreur lors de la récupération des données hero:', error);
-    }
-  })();
-});
+onMounted(async () => {
+  checkIsMobile()
+  window.addEventListener('resize', resizeHandler)
+
+  await fetchContent()
+  footer.value = content.value?.footer || null
+})
 
 onUnmounted(() => {
-  window.removeEventListener('resize', resizeHandler);
-});
+  window.removeEventListener('resize', resizeHandler)
+})
 </script>
+
 
 
 <template>

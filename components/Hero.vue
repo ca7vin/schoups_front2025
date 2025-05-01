@@ -31,18 +31,18 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, watchEffect } from 'vue'
+import { useContent } from '~/composables/useContent'
 
-// Refs pour le contenu dynamique
+const { content } = useContent()
+
 const bannerHero = ref<{ title: string; text: string; image: string } | null>(null)
 
-onMounted(async () => {
-  try {
-    const response = await fetch('https://schoups25back-production.up.railway.app/api/onepagecontent')
-    const data = await response.json()
-    bannerHero.value = data.banner_hero
-  } catch (error) {
-    console.error('Erreur lors de la récupération des données hero:', error)
+// Dès que `content` est dispo, on récupère `banner_hero`
+watchEffect(() => {
+  if (content.value?.banner_hero) {
+    bannerHero.value = content.value.banner_hero
   }
 })
 </script>
+
