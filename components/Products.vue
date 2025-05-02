@@ -194,7 +194,7 @@ type Product = {
 
 const labels: Record<string, string> = {
   matieresGrasses: 'Matières grasses',
-  acidesGrasSatures: 'Acides gras saturés',
+  acidesGrasSatures: 'Dont acides gras saturés',
   glucides: 'Glucides',
   sucres: 'Dont sucres',
   proteines: 'Protéines',
