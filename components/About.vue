@@ -35,11 +35,16 @@ import { useContent } from '~/composables/useContent'
 const { content } = useContent()
 
 const bannerAbout = ref<{ title: string; text: string; image: string } | null>(null)
+const footer = ref<{ facebook?: string; instagram?: string } | null>(null)
+
 
 // Dès que `content` est dispo, on récupère `banner_about`
 watchEffect(() => {
   if (content.value?.banner_about) {
     bannerAbout.value = content.value.banner_about
+  }
+  if (content.value?.footer) {
+    footer.value = content.value.footer
   }
 })
 </script>
