@@ -1,7 +1,7 @@
 <template>
   <section id="products">
     <div class="bg-[#D4338B]">
-      <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl text-center text-white py-6 md:py-8">
+      <h2 class="uppercase text-4xl sm:text-5xl md:text-6xl lg:text-6xl text-center text-white py-6 md:py-8">
         Nos produits
       </h2>
       <div class="flex justify-center mb-10">

@@ -7,7 +7,7 @@
 
       <!-- Texte -->
       <div id="aboutText" class="w-full p-5 lg:w-1/2 px-6 xl:px-24 2xl:px-32 text-center lg:text-left">
-        <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl mb-6 lg:mb-10 text-white">
+        <h2 class="uppercase text-4xl sm:text-5xl md:text-6xl lg:text-6xl mb-6 lg:mb-10 text-white">
           <span v-html="bannerAbout.title" />
         </h2>
         <p class="text-sm sm:text-base lg:text-lg mb-6 text-white">

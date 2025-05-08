@@ -3,7 +3,7 @@
     class="w-full max-h-screen h-screen flex flex-col lg:flex-row items-center justify-center overflow-hidden">
     <!-- Texte -->
     <div v-if="bannerHero" class="w-full lg:w-1/2 pt-5 px-6 xl:px-24 2xl:px-32 mb-8 lg:mb-0 text-center lg:text-left">
-      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl mb-6 text-[#D4338B]">
+      <h1 class="uppercase text-4xl sm:text-5xl md:text-6xl lg:text-6xl mb-6 text-[#D4338B]">
         <span v-html="bannerHero.title" />
       </h1>
       <p class="text-sm sm:text-base lg:text-lg mb-6 text-[#D4338B]">
