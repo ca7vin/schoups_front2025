@@ -33,7 +33,7 @@
           <div class="bg-[#D4338B] rounded-xl p-6 max-w-5xl w-full mx-4 overflow-y-auto max-h-[90vh] relative">
             <button class="absolute top-4 right-4 text-white text-2xl"
               @click="showModalComment = false">&times;</button>
-            <h2 class="text-5xl text-white text-center mb-6">Comment servir nos produits ?</h2>
+            <h2 class="uppercase text-5xl text-white text-center mb-6">Comment servir nos produits ?</h2>
             <h2 class="text-3xl text-white text-center mb-6 underline">Température idéale : entre -16 et -18 degrés</h2>
             <div class="flex flex-col md:flex-row items-stretch gap-4">
               <!-- Bloc 1 -->
@@ -89,7 +89,7 @@
           <transition name="fade">
             <div v-if="hoveredIndex === index"
               class="absolute inset-0 w-full min-w-full bg-[#D4338B]/80 flex flex-col items-center justify-center rounded-2xl border-2 border-white">
-              <span class="text-white text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-semibold">{{ product.gout
+              <span class="uppercase text-white text-4xl sm:text-5xl md:text-6xl lg:text-6xl font-semibold">{{ product.gout
                 }}</span>
               <span class="text-white text-2xl mt-5">+ d'infos</span>
             </div>
@@ -108,7 +108,7 @@
             &times;
           </button>
 
-          <h3 class="text-4xl font-bold mb-4 text-[#D4338B]">
+          <h3 class="uppercase text-4xl font-bold mb-4 text-[#D4338B]">
             {{ selectedProduct.gout }} ({{ selectedProduct.categorie }})
           </h3>
 
