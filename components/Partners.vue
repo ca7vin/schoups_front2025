@@ -1,7 +1,7 @@
 <template>
   <section id="partners">
     <div class="w-full flex flex-col items-center">
-      <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl md:py-8" style="color: #D4338B;">Nos partenaires</h2>
+      <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl py-6 md:py-8" style="color: #D4338B;">Nos partenaires</h2>
       <div class="w-full flex justify-between pb-10 items-center flex-wrap">
         <!-- Left Button -->
         <button class="w-1/12 sm:w-1/6 md:w-1/12" @click="swiper.prev()">

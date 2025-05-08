@@ -1,7 +1,7 @@
 <template>
   <section id="contact" class="px-4">
     <div class="flex flex-col items-center">
-      <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl md:py-8 xl:mb-5" style="color: #D4338B;">Contactez-nous</h2>
+      <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-6xl py-6 md:py-8 xl:mb-5" style="color: #D4338B;">Contactez-nous</h2>
 
       <form class="w-full max-w-3xl bg-[#D4338B] p-6 sm:p-10 rounded-3xl flex flex-col gap-6 text-white"
         @submit.prevent="submitContactForm">
