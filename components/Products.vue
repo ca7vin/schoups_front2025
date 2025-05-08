@@ -139,7 +139,8 @@
             </div>
           </div>
 
-          <button @click="closeDrawer" class="mt-6 px-4 py-2 bg-[#D4338B] text-white rounded-xl">
+          <button @click="closeDrawer"
+            class="mt-5 uppercase bg-[#D4338B] text-white px-6 py-4 rounded-xl font-semibold shadow-sm border border-[#D4338B] transition-all duration-300 ease-in-out hover:ring-2 hover:ring-white hover:bg-white hover:text-[#D4338B] hover:-translate-y-1 hover:shadow-lg">
             Fermer
           </button>
         </div>
@@ -227,7 +228,7 @@ const clearHoverTimeout = () => {
 const closeDrawer = () => {
   selectedProduct.value = null
   resetHoverTimeout()
-  window.location.hash = '#products'
+  // window.location.hash = '#products'
   window.scrollTo(0, savedScrollPosition.value)
 }
 

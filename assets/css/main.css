@@ -12,9 +12,10 @@
     font-family: 'Engschrift';
 }
 
-.navFont {
-font-size: 16px;
+* {
+letter-spacing: 1px;
 }
+
 
 html {
     scroll-behavior: smooth;

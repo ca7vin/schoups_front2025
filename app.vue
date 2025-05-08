@@ -5,6 +5,8 @@ import { useContent } from '~/composables/useContent'
 const menuOpen = ref(false)
 const isMobile = ref(false)
 const footer = ref<{ facebook: string; instagram: string } | null>(null)
+const isLoading = ref(true)
+const loadingPercent = ref(0)
 
 const checkIsMobile = () => {
   isMobile.value = window.innerWidth <= 860
@@ -26,8 +28,22 @@ onMounted(async () => {
   checkIsMobile()
   window.addEventListener('resize', resizeHandler)
 
+  // Simule l'animation du pourcentage
+  const interval = setInterval(() => {
+    if (loadingPercent.value < 95) {
+      loadingPercent.value += Math.floor(Math.random() * 5) + 1
+    }
+  }, 100)
+
   await fetchContent()
   footer.value = content.value?.footer || null
+
+  // Termine le chargement
+  loadingPercent.value = 100
+  setTimeout(() => {
+    isLoading.value = false
+    clearInterval(interval)
+  }, 700)
 })
 
 onUnmounted(() => {
@@ -39,6 +55,16 @@ onUnmounted(() => {
 
 <template>
   <div>
+    <transition name="fade-loading">
+      <div v-if="isLoading" class="fixed inset-0 bg-[#D4338B] z-[9999] flex flex-col items-center justify-center">
+        <img src="./public/images/logo-navbar.png" class="w-1/3 max-w-xs mb-6" alt="Logo" />
+        <div class="relative w-2/3 max-w-sm h-2 bg-white/20 rounded-full overflow-hidden">
+          <div class="absolute top-0 left-0 h-full bg-white transition-all duration-200"
+            :style="{ width: `${loadingPercent}%` }"></div>
+        </div>
+        <p class="mt-4 text-white text-sm font-semibold">{{ loadingPercent }}%</p>
+      </div>
+    </transition>
     <!-- HEADER -->
     <header id="header" class="navbar">
       <!-- BOUTON MENU MOBILE -->
@@ -91,17 +117,17 @@ onUnmounted(() => {
             </li>
           </div>
           <div class="flex items-center w-3/5 justify-around lg:ps-52">
-            <li class="text-white text-xs uppercase hover:underline">
-              <NuxtLink class="no-underline navFont" to="#hero">Accueil</NuxtLink>
+            <li class="text-white uppercase hover:underline">
+              <NuxtLink class="no-underline text-lg navFont" to="#hero">Accueil</NuxtLink>
             </li>
-            <li class="text-white text-xs uppercase hover:underline">
-              <NuxtLink class="no-underline navFont" to="#about">Qui sommes-nous</NuxtLink>
+            <li class="text-white uppercase hover:underline">
+              <NuxtLink class="no-underline text-lg navFont" to="#about">Qui sommes-nous</NuxtLink>
             </li>
-            <li class="text-white text-xs uppercase hover:underline">
-              <NuxtLink class="no-underline navFont" to="#products">Nos produits</NuxtLink>
+            <li class="text-white uppercase hover:underline">
+              <NuxtLink class="no-underline text-lg navFont" to="#products">Nos produits</NuxtLink>
             </li>
-            <li class="text-white text-xs uppercase hover:underline">
-              <NuxtLink class="no-underline navFont" to="#contact">Contact</NuxtLink>
+            <li class="text-white uppercase hover:underline">
+              <NuxtLink class="no-underline text-lg navFont" to="#contact">Contact</NuxtLink>
             </li>
           </div>
         </ul>
@@ -142,6 +168,20 @@ onUnmounted(() => {
 
 
 <style scoped>
+
+.fade-loading-enter-active,
+.fade-loading-leave-active {
+  transition: opacity 0.4s ease;
+}
+.fade-loading-enter-from,
+.fade-loading-leave-to {
+  opacity: 0;
+}
+.fade-loading-enter-to,
+.fade-loading-leave-from {
+  opacity: 1;
+}
+
 #header {
   position: sticky;
   top: 0;
