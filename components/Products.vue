@@ -151,7 +151,7 @@
 
 
 <script setup lang="ts">
-import { ref, computed, nextTick, watchEffect } from 'vue'
+import { ref, computed, nextTick, watchEffect, onMounted } from 'vue'
 import { useContent } from '~/composables/useContent'
 
 const { content } = useContent()
@@ -167,7 +167,7 @@ const animateBars = ref(false)
 const selectedProduct = ref<Product | null>(null)
 const selectedCategory = ref('all')
 
-// ✅ Remplissage des produits à partir du contenu partagé
+// Remplissage des produits à partir du contenu partagé
 watchEffect(() => {
   if (Array.isArray(content.value?.glaces)) {
     products.value = content.value.glaces
@@ -228,8 +228,8 @@ const clearHoverTimeout = () => {
 const closeDrawer = () => {
   selectedProduct.value = null
   resetHoverTimeout()
-  // window.location.hash = '#products'
   window.scrollTo(0, savedScrollPosition.value)
+  window.location.hash = ''
 }
 
 // TYPES
@@ -296,7 +296,29 @@ const barData = computed(() => {
     sel: n.sel,
   }
 })
+
+// OUVERTURE AUTOMATIQUE DU DRAWER SI #product-ID EST PRÉSENT DANS L’URL
+onMounted(() => {
+  const stop = watchEffect(async (onInvalidate) => {
+    if (products.value.length === 0) return
+
+    await nextTick()
+
+    const hash = window.location.hash
+    const match = hash.match(/^#product-(\d+)$/)
+    if (match) {
+      const id = parseInt(match[1])
+      const index = products.value.findIndex(p => p.id === id)
+      if (index !== -1) {
+        openDrawer(index)
+      }
+    }
+
+    stop()
+  })
+})
 </script>
+
 
 
 
