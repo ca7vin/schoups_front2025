@@ -116,7 +116,7 @@
 
           <div class="mb-6">
             <h4 class="text-2xl font-semibold mb-2">Ingrédients</h4>
-            <p>{{ selectedProduct.ingredients.join(', ') }}</p>
+            <p class="md:text-lg">{{ selectedProduct.ingredients.join(', ') }}</p>
           </div>
 
           <div>
