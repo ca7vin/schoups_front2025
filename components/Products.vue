@@ -225,11 +225,12 @@ const clearHoverTimeout = () => {
   }
 }
 
-const closeDrawer = () => {
+const closeDrawer = async () => {
   selectedProduct.value = null
   resetHoverTimeout()
-  window.scrollTo(0, savedScrollPosition.value)
   window.location.hash = ''
+  await nextTick()
+  window.scrollTo(0, savedScrollPosition.value)
 }
 
 // TYPES
