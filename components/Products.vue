@@ -226,11 +226,22 @@ const clearHoverTimeout = () => {
 }
 
 const closeDrawer = async () => {
+  const hashWasProduct = window.location.hash.startsWith('#product-')
   selectedProduct.value = null
   resetHoverTimeout()
   window.location.hash = ''
+
   await nextTick()
-  window.scrollTo(0, savedScrollPosition.value)
+
+  if (hashWasProduct) {
+    // Scroll manuel vers la section "products"
+    const el = document.getElementById('products')
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
+  } else {
+    window.scrollTo({ top: savedScrollPosition.value, behavior: 'smooth' })
+  }
 }
 
 // TYPES
