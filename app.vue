@@ -5,6 +5,7 @@ import { useContent } from '~/composables/useContent'
 const menuOpen = ref(false)
 const isMobile = ref(false)
 const footer = ref<{ facebook: string; instagram: string } | null>(null)
+const marquee = ref<{ text: string; active: boolean } | null>(null)
 const isLoading = ref(true)
 const loadingPercent = ref(0)
 
@@ -37,6 +38,7 @@ onMounted(async () => {
 
   await fetchContent()
   footer.value = content.value?.footer || null
+  marquee.value = content.value?.marquee || null
 
   // Termine le chargement
   loadingPercent.value = 100
@@ -134,10 +136,18 @@ onUnmounted(() => {
       </nav>
     </header>
 
+    <div v-if="marquee?.active"
+      class="info-marquee bg-white text-[#D4338B] text-sm sm:text-base py-2 overflow-hidden whitespace-nowrap">
+      <div class="marquee-text">
+        {{ marquee.text }}
+      </div>
+    </div>
+
     <!-- SECTIONS -->
     <Hero />
     <About />
     <Partners />
+    <!-- <Marche /> -->
     <!-- <Conservation /> -->
     <Products />
     <Contact />
@@ -168,15 +178,36 @@ onUnmounted(() => {
 
 
 <style scoped>
+.info-marquee {
+  position: relative;
+}
+
+.marquee-text {
+  display: inline-block;
+  padding-left: 100%;
+  animation: scroll-left 20s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-100%);
+  }
+}
 
 .fade-loading-enter-active,
 .fade-loading-leave-active {
   transition: opacity 0.4s ease;
 }
+
 .fade-loading-enter-from,
 .fade-loading-leave-to {
   opacity: 0;
 }
+
 .fade-loading-enter-to,
 .fade-loading-leave-from {
   opacity: 1;
