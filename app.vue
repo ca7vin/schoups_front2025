@@ -137,7 +137,7 @@ onUnmounted(() => {
     </header>
 
     <div v-if="marquee?.active"
-      class="info-marquee bg-white text-[#D4338B] text-sm sm:text-base py-2 overflow-hidden whitespace-nowrap">
+      class="info-marquee bg-white text-[#D4338B] text-sm sm:text-base py-2 overflow-hidden whitespace-nowrap lg:text-lg">
       <div class="marquee-text">
         {{ marquee.text }}
       </div>
