@@ -4,34 +4,28 @@
       <h2 class="uppercase text-4xl sm:text-5xl md:text-6xl lg:text-6xl py-6 md:py-8" style="color: #D4338B;">Nos partenaires</h2>
       <div class="w-full flex justify-between pb-10 items-center flex-wrap">
         <!-- Left Button -->
-        <button class="w-1/12 sm:w-1/6 md:w-1/12"
-                @click="slidePrev"
-                type="button">
+        <button class="w-1/12 sm:w-1/6 md:w-1/12" @click="swiper?.slidePrev()">
           <font-awesome :style="{ color: '#d3338b' }" icon="chevron-left" class="fa-4x" />
         </button>
+
         <!-- Swiper Container -->
-        <div class="w-10/12 sm:w-10/12 md:w-10/12">
-          <Swiper
-            :autoplay="{ delay: 3000, disableOnInteraction: false }"
-            :loop="true"
-            :modules="modules"
-            ref="swiperRef"
-            @mouseenter="stopAutoplay"
-            @mouseleave="startAutoplay"
-          >
-            <SwiperSlide v-for="(partner, idx) in partners" :key="idx">
-              <div class="flex justify-center items-center bg-white" style="color: #d3338b;">
-                <img :src="partner.image"
-                     :alt="`image ${partner.nom}`"
-                     class="object-cover w-2/3 sm:w-1/3 md:w-1/2 lg:w-1/2 xl:w-1/4" />
-              </div>
-            </SwiperSlide>
-          </Swiper>
-        </div>
+        <swiper-container
+          class="w-10/12 sm:w-10/12 md:w-10/12"
+          ref="containerRef"
+          :autoplay="{ delay: 3000, disableOnInteraction: false }"
+          :loop="true"
+          @swiper="onSwiper"
+          @mouseenter="stopAutoplay"
+          @mouseleave="startAutoplay"
+        >
+          <swiper-slide v-for="(partner, idx) in partners" :key="idx" style="background-color: #fff; color: #d3338b;">
+            <img :src="partner.image" :alt="`image ${partner.nom}`"
+              class="object-cover w-2/3 sm:w-1/3 md:w-1/2 lg:w-1/2 xl:w-1/4" />
+          </swiper-slide>
+        </swiper-container>
+
         <!-- Right Button -->
-        <button class="w-1/12 sm:w-1/6 md:w-1/12"
-                @click="slideNext"
-                type="button">
+        <button class="w-1/12 sm:w-1/6 md:w-1/12" @click="swiper?.slideNext()">
           <font-awesome :style="{ color: '#d3338b' }" icon="chevron-right" class="fa-4x" />
         </button>
       </div>
@@ -42,13 +36,10 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useContent } from '~/composables/useContent'
-// On importe les modules de Swiper pour l'autoplay et la navigation manuelle
-import { Autoplay } from 'swiper/modules'
-import { Swiper, SwiperSlide } from 'swiper/nuxt'
-
-const modules = [Autoplay]
+import type { Swiper } from 'swiper/types'
 
 const { content } = useContent()
+
 const partners = computed(() => {
   if (!Array.isArray(content.value?.partners)) return []
   return content.value.partners.map((partner: any) => ({
@@ -57,24 +48,32 @@ const partners = computed(() => {
   }))
 })
 
-const swiperRef = ref<any>(null)
+const swiper = ref<Swiper | null>(null)
 
-function slidePrev() {
-  swiperRef.value?.swiper?.slidePrev()
+function onSwiper(instance: Swiper) {
+  swiper.value = instance
+  setTimeout(() => {
+    instance?.autoplay?.start?.()
+  }, 50)
 }
-function slideNext() {
-  swiperRef.value?.swiper?.slideNext()
-}
+
 function stopAutoplay() {
-  swiperRef.value?.swiper?.autoplay?.stop?.()
+  swiper.value?.autoplay?.stop()
 }
+
 function startAutoplay() {
-  swiperRef.value?.swiper?.autoplay?.start?.()
+  swiper.value?.autoplay?.start()
 }
+  onMounted(() => {
+  // Attend que tout soit prêt, puis essaie de démarrer autoplay
+  setTimeout(() => {
+    swiper.value?.autoplay?.start?.()
+  }, 300)
+})
 </script>
 
 <style scoped>
-.swiper-slide {
+swiper-slide {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -89,18 +88,22 @@ function startAutoplay() {
   .fa-4x {
     display: none;
   }
+
   .swiper-slide img {
     width: 70%;
   }
 }
+
 @media screen and (min-width: 768px) and (max-width: 1024px) {
   #partners {
     padding: 30px;
   }
+
   .swiper-slide img {
     width: 50%;
   }
 }
+
 @media screen and (min-width: 1025px) {
   .swiper-slide img {
     width: 25%;
