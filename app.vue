@@ -51,6 +51,15 @@ onMounted(async () => {
 onUnmounted(() => {
   window.removeEventListener('resize', resizeHandler)
 })
+
+  useSeoMeta({
+  title: 'Schoups Artisan Glacier',
+  ogTitle: 'Schoups Artisan Glacier',
+  description: 'Schoups Artisan Glacier - Site officiel',
+  ogDescription: 'Schoups Artisan Glacier - Site officiel',
+  ogImage: "https://schoups25back-production.up.railway.app////storage//01JT130QP9NN459AABYEXHJ7P3.jpg",
+  twitterCard: 'summary_large_image',
+})
 </script>
 
 
