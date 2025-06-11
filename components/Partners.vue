@@ -5,14 +5,22 @@ import { useContent } from '~/composables/useContent'
 const { content } = useContent()
 
 const partners = computed(() => {
+  // Simule 3+ slides si jamais partners est trop court (pour test)
   if (!Array.isArray(content.value?.partners)) return []
-  return content.value.partners.map((partner: any) => ({
+  const arr = content.value.partners.map((partner: any) => ({
     nom: partner.nom,
     image: partner.image,
   }))
+  // Option de fallback pour tester facilement si tu veux
+  // while (arr.length < 4) arr.push({ nom: 'Fake', image: 'https://via.placeholder.com/150' })
+  return arr
 })
 
+// ref DOM pour swiper-container (web component)
 const containerRef = ref<any>(null)
+
+// Le mode loop n'est activé que si 3 slides ou plus
+const loopEnabled = computed(() => partners.value.length > 2)
 
 function slidePrev() {
   if (containerRef.value) {
@@ -29,38 +37,67 @@ function slideNext() {
 <template>
   <section id="partners">
     <div class="w-full flex flex-col items-center">
-      <h2 class="uppercase text-4xl sm:text-5xl md:text-6xl lg:text-6xl py-6 md:py-8" style="color: #D4338B;">Nos partenaires</h2>
+      <h2
+        class="uppercase text-4xl sm:text-5xl md:text-6xl lg:text-6xl py-6 md:py-8"
+        style="color: #D4338B;"
+      >
+        Nos partenaires
+      </h2>
       <div class="w-full flex justify-between pb-10 items-center flex-wrap">
         <!-- Left Button -->
-        <button class="w-1/12 sm:w-1/6 md:w-1/12" @click="slidePrev">
-          <font-awesome :style="{ color: '#d3338b' }" icon="chevron-left" class="fa-4x" />
+        <button
+          class="w-1/12 sm:w-1/6 md:w-1/12"
+          @click="slidePrev"
+          :disabled="partners.length < 2"
+        >
+          <font-awesome
+            :style="{ color: '#d3338b' }"
+            icon="chevron-left"
+            class="fa-4x"
+          />
         </button>
 
         <!-- Swiper Container -->
         <ClientOnly>
           <swiper-container
+            :key="partners.length"
             ref="containerRef"
             class="w-10/12 sm:w-10/12 md:w-10/12"
+            :loop="loopEnabled"
+            slides-per-view="1"
             :autoplay="{ delay: 3000, disableOnInteraction: false }"
-            :loop="true"
+            style="--swiper-navigation-color: #d4338b;"
           >
-            <swiper-slide v-for="(partner, idx) in partners" :key="idx" style="background-color: #fff; color: #d3338b;">
-              <img :src="partner.image" :alt="`image ${partner.nom}`"
-                class="object-cover w-2/3 sm:w-1/3 md:w-1/2 lg:w-1/2 xl:w-1/4" />
+            <swiper-slide
+              v-for="(partner, idx) in partners"
+              :key="idx"
+              style="background-color: #fff; color: #d3338b;"
+            >
+              <img
+                :src="partner.image"
+                :alt="`image ${partner.nom}`"
+                class="object-cover w-2/3 sm:w-1/3 md:w-1/2 lg:w-1/2 xl:w-1/4"
+              />
             </swiper-slide>
           </swiper-container>
         </ClientOnly>
 
         <!-- Right Button -->
-        <button class="w-1/12 sm:w-1/6 md:w-1/12" @click="slideNext">
-          <font-awesome :style="{ color: '#d3338b' }" icon="chevron-right" class="fa-4x" />
+        <button
+          class="w-1/12 sm:w-1/6 md:w-1/12"
+          @click="slideNext"
+          :disabled="partners.length < 2"
+        >
+          <font-awesome
+            :style="{ color: '#d3338b' }"
+            icon="chevron-right"
+            class="fa-4x"
+          />
         </button>
       </div>
     </div>
   </section>
 </template>
-
-
 
 <style scoped>
 swiper-slide {
