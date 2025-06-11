@@ -7,7 +7,7 @@
         <span v-html="bannerHero.title" />
       </h1>
       <p class="text-sm sm:text-base lg:text-lg mb-6 text-[#D4338B]">
-        <span v-html="bannerHero.text" />
+        <span v-html="bannerHero.text" class="rich-content" />
       </p>
       <div class="flex flex-col lg:flex-row items-center justify-start mt-6 lg:mt-10">
         <NuxtLink
@@ -45,4 +45,16 @@ watchEffect(() => {
   }
 })
 </script>
+
+<style scoped>
+#hero .rich-content a {
+  font-weight: bold;
+  text-decoration: none; /* Pas de soulignement de base */
+  transition: text-decoration 0.2s;
+}
+
+#hero .rich-content a:hover {
+  text-decoration: underline;
+}
+</style>
 
