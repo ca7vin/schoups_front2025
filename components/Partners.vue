@@ -13,19 +13,23 @@ const partners = computed(() => {
 
 const containerRef = ref<any>(null)
 
-// Navigation
 function slidePrev() {
-  containerRef.value?.slidePrev()
+  if (process.client && containerRef.value) {
+    containerRef.value.slidePrev()
+  }
 }
 function slideNext() {
-  containerRef.value?.slideNext()
+  if (process.client && containerRef.value) {
+    containerRef.value.slideNext()
+  }
 }
 
-// (Optionnel : parfois nécessaire pour l'autoplay en SSR)
 onMounted(() => {
-  setTimeout(() => {
-    containerRef.value?.autoplay?.start?.()
-  }, 300)
+  if (process.client && containerRef.value?.autoplay?.start) {
+    setTimeout(() => {
+      containerRef.value.autoplay.start()
+    }, 300)
+  }
 })
 </script>
 
@@ -34,29 +38,29 @@ onMounted(() => {
     <div class="w-full flex flex-col items-center">
       <h2 class="uppercase text-4xl ...">Nos partenaires</h2>
       <div class="w-full flex justify-between pb-10 items-center flex-wrap">
-        <!-- Left Button -->
-        <button class="..." @click="slidePrev">
+        <button ... @click="slidePrev">
           <font-awesome ... icon="chevron-left" class="fa-4x" />
         </button>
-        <!-- Swiper Container -->
-        <swiper-container
-          class="w-10/12 ..."
-          ref="containerRef"
-          :autoplay="{ delay: 3000, disableOnInteraction: false }"
-          :loop="true"
-        >
-          <swiper-slide v-for="(partner, idx) in partners" :key="idx" ...>
-            <img :src="partner.image" :alt="`image ${partner.nom}`" ... />
-          </swiper-slide>
-        </swiper-container>
-        <!-- Right Button -->
-        <button class="..." @click="slideNext">
+        <ClientOnly>
+          <swiper-container
+            class="w-10/12 ..."
+            ref="containerRef"
+            :autoplay="{ delay: 3000, disableOnInteraction: false }"
+            :loop="true"
+          >
+            <swiper-slide v-for="(partner, idx) in partners" :key="idx" ...>
+              <img :src="partner.image" :alt="`image ${partner.nom}`" ... />
+            </swiper-slide>
+          </swiper-container>
+        </ClientOnly>
+        <button ... @click="slideNext">
           <font-awesome ... icon="chevron-right" class="fa-4x" />
         </button>
       </div>
     </div>
   </section>
 </template>
+
 
 
 <style scoped>
