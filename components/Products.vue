@@ -115,16 +115,18 @@
           <img :src="selectedProduct.image" :alt="selectedProduct.gout" class="w-full h-auto rounded-lg mb-4" />
 
           <div class="mb-6">
-            <h4 class="text-2xl font-semibold mb-2">Ingrédients</h4>
+            <h4 class="text-2xl font-semibold mb-2">Ingrédients / Ingrediënten</h4>
             <p class="md:text-lg">{{ selectedProduct.ingredients.join(', ') }}</p>
           </div>
 
           <div>
-            <h4 class="text-2xl font-semibold mb-2">Valeurs nutritionnelles (pour 100g)</h4>
+            <h4 class="text-2xl font-semibold mb-2">Valeurs nutritionnelles (pour 100g) <br>
+              Voedingswaarden (per 100g)
+            </h4>
             <div class="space-y-4">
               <div>
                 <p class="font-medium text-lg mb-1">
-                  Énergie : {{ selectedProduct.nutrition.energie.kj }} kJ - {{ selectedProduct.nutrition.energie.kcal }}
+                  Énergie / Brennwert : {{ selectedProduct.nutrition.energie.kj }} kJ - {{ selectedProduct.nutrition.energie.kcal }}
                   kcal
                 </p>
               </div>
@@ -266,13 +268,13 @@ type Product = {
 }
 
 const labels: Record<string, string> = {
-  matieresGrasses: 'Matières grasses',
-  acidesGrasSatures: 'Dont acides gras saturés',
-  glucides: 'Glucides',
-  sucres: 'Dont sucres',
-  proteines: 'Protéines',
-  fibres: 'Fibres',
-  sel: 'Sel',
+  matieresGrasses: 'Matières grasses / Vetten',
+  acidesGrasSatures: 'Dont acides gras saturés / Waarvan verzadigde vetzuren',
+  glucides: 'Glucides / Koolhydraten',
+  sucres: 'Dont sucres / Waarvan suikers',
+  proteines: 'Protéines / Ewitten',
+  fibres: 'Fibres / Vezels',
+  sel: 'Sel / Zout',
 }
 
 const units: Record<string, string> = {
