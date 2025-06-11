@@ -269,7 +269,7 @@ type Product = {
 
 const labels: Record<string, string> = {
   matieresGrasses: 'Matières grasses / Vetten',
-  acidesGrasSatures: 'Dont acides gras saturés <br>/ Waarvan verzadigde vetzuren',
+  acidesGrasSatures: 'Dont acides gras saturés / Waarvan verzadigde vetzuren',
   glucides: 'Glucides / Koolhydraten',
   sucres: 'Dont sucres / Waarvan suikers',
   proteines: 'Protéines / Ewitten',
