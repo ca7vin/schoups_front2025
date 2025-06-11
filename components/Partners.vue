@@ -43,7 +43,7 @@ function slideNext() {
       >
         Nos partenaires
       </h2>
-      <div class="w-full flex justify-between pb-10 items-center flex-wrap">
+      <div class="w-full flex justify-center pb-10 items-center flex-wrap">
 
         <!-- Swiper Container -->
         <ClientOnly>
