@@ -44,18 +44,6 @@ function slideNext() {
         Nos partenaires
       </h2>
       <div class="w-full flex justify-between pb-10 items-center flex-wrap">
-        <!-- Left Button -->
-        <button
-          class="w-1/12 sm:w-1/6 md:w-1/12"
-          @click="slidePrev"
-          :disabled="partners.length < 2"
-        >
-          <font-awesome
-            :style="{ color: '#d3338b' }"
-            icon="chevron-left"
-            class="fa-4x"
-          />
-        </button>
 
         <!-- Swiper Container -->
         <ClientOnly>
@@ -82,18 +70,6 @@ function slideNext() {
           </swiper-container>
         </ClientOnly>
 
-        <!-- Right Button -->
-        <button
-          class="w-1/12 sm:w-1/6 md:w-1/12"
-          @click="slideNext"
-          :disabled="partners.length < 2"
-        >
-          <font-awesome
-            :style="{ color: '#d3338b' }"
-            icon="chevron-right"
-            class="fa-4x"
-          />
-        </button>
       </div>
     </div>
   </section>
