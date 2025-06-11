@@ -3,6 +3,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useContent } from '~/composables/useContent'
 
 const { content } = useContent()
+
 const partners = computed(() => {
   if (!Array.isArray(content.value?.partners)) return []
   return content.value.partners.map((partner: any) => ({
@@ -11,56 +12,55 @@ const partners = computed(() => {
   }))
 })
 
+// ref DOM pour swiper-container (web component)
 const containerRef = ref<any>(null)
 
 function slidePrev() {
-  if (process.client && containerRef.value) {
+  // Swiper web component : les méthodes sont sur l’élément DOM, pas l’instance Swiper JS
+  if (containerRef.value && typeof containerRef.value.slidePrev === 'function') {
     containerRef.value.slidePrev()
   }
 }
+
 function slideNext() {
-  if (process.client && containerRef.value) {
+  if (containerRef.value && typeof containerRef.value.slideNext === 'function') {
     containerRef.value.slideNext()
   }
 }
-
-onMounted(() => {
-  if (process.client && containerRef.value?.autoplay?.start) {
-    setTimeout(() => {
-      containerRef.value.autoplay.start()
-    }, 300)
-  }
-})
 </script>
-
 <template>
   <section id="partners">
     <div class="w-full flex flex-col items-center">
-      <h2 class="uppercase text-4xl ...">Nos partenaires</h2>
+      <h2 class="uppercase text-4xl sm:text-5xl md:text-6xl lg:text-6xl py-6 md:py-8" style="color: #D4338B;">Nos partenaires</h2>
       <div class="w-full flex justify-between pb-10 items-center flex-wrap">
-        <button ... @click="slidePrev">
-          <font-awesome ... icon="chevron-left" class="fa-4x" />
+        <!-- Left Button -->
+        <button class="w-1/12 sm:w-1/6 md:w-1/12" @click="slidePrev">
+          <font-awesome :style="{ color: '#d3338b' }" icon="chevron-left" class="fa-4x" />
         </button>
+
+        <!-- Swiper Container -->
         <ClientOnly>
           <swiper-container
-            class="w-10/12 ..."
+            class="w-10/12 sm:w-10/12 md:w-10/12"
             ref="containerRef"
             :autoplay="{ delay: 3000, disableOnInteraction: false }"
             :loop="true"
           >
-            <swiper-slide v-for="(partner, idx) in partners" :key="idx" ...>
-              <img :src="partner.image" :alt="`image ${partner.nom}`" ... />
+            <swiper-slide v-for="(partner, idx) in partners" :key="idx" style="background-color: #fff; color: #d3338b;">
+              <img :src="partner.image" :alt="`image ${partner.nom}`"
+                class="object-cover w-2/3 sm:w-1/3 md:w-1/2 lg:w-1/2 xl:w-1/4" />
             </swiper-slide>
           </swiper-container>
         </ClientOnly>
-        <button ... @click="slideNext">
-          <font-awesome ... icon="chevron-right" class="fa-4x" />
+
+        <!-- Right Button -->
+        <button class="w-1/12 sm:w-1/6 md:w-1/12" @click="slideNext">
+          <font-awesome :style="{ color: '#d3338b' }" icon="chevron-right" class="fa-4x" />
         </button>
       </div>
     </div>
   </section>
 </template>
-
 
 
 <style scoped>
