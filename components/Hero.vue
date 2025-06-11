@@ -46,7 +46,7 @@ watchEffect(() => {
 })
 </script>
 
-<style scoped>
+<style>
 #hero .rich-content a {
   font-weight: bold;
   text-decoration: none; /* Pas de soulignement de base */
