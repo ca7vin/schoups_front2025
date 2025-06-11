@@ -85,9 +85,9 @@
       </TransitionGroup>
 
       <!-- Bouton "Plus de goûts" -->
-      <div class="flex justify-center my-8">
+      <div class="flex justify-center">
         <button v-if="hasMore" @click="loadMore"
-          class="uppercase w-[220px] h-[56px] bg-white text-[#D4338B] px-6 py-4 rounded-xl font-semibold shadow-sm border border-white transition-all duration-300 ease-in-out hover:ring-2 hover:ring-[#D4338B] hover:bg-[#D4338B] hover:text-white hover:-translate-y-1 hover:shadow-lg">
+          class="mb-8 uppercase w-[220px] h-[56px] bg-white text-[#D4338B] px-6 py-4 rounded-xl font-semibold shadow-sm border border-white transition-all duration-300 ease-in-out hover:ring-2 hover:ring-[#D4338B] hover:bg-[#D4338B] hover:text-white hover:-translate-y-1 hover:shadow-lg">
           Plus de goûts
         </button>
       </div>
