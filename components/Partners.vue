@@ -52,6 +52,9 @@ const swiper = ref<Swiper | null>(null)
 
 function onSwiper(instance: Swiper) {
   swiper.value = instance
+  setTimeout(() => {
+    instance?.autoplay?.start?.()
+  }, 50)
 }
 
 function stopAutoplay() {
