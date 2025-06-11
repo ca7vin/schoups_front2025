@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 import { useContent } from '~/composables/useContent'
 
 const { content } = useContent()
@@ -12,22 +12,20 @@ const partners = computed(() => {
   }))
 })
 
-// ref DOM pour swiper-container (web component)
 const containerRef = ref<any>(null)
 
 function slidePrev() {
-  // Swiper web component : les méthodes sont sur l’élément DOM, pas l’instance Swiper JS
-  if (containerRef.value && typeof containerRef.value.slidePrev === 'function') {
-    containerRef.value.slidePrev()
+  if (containerRef.value) {
+    containerRef.value.dispatchEvent(new CustomEvent('swiperPrev'))
   }
 }
-
 function slideNext() {
-  if (containerRef.value && typeof containerRef.value.slideNext === 'function') {
-    containerRef.value.slideNext()
+  if (containerRef.value) {
+    containerRef.value.dispatchEvent(new CustomEvent('swiperNext'))
   }
 }
 </script>
+
 <template>
   <section id="partners">
     <div class="w-full flex flex-col items-center">
@@ -41,8 +39,8 @@ function slideNext() {
         <!-- Swiper Container -->
         <ClientOnly>
           <swiper-container
-            class="w-10/12 sm:w-10/12 md:w-10/12"
             ref="containerRef"
+            class="w-10/12 sm:w-10/12 md:w-10/12"
             :autoplay="{ delay: 3000, disableOnInteraction: false }"
             :loop="true"
           >
@@ -61,6 +59,7 @@ function slideNext() {
     </div>
   </section>
 </template>
+
 
 
 <style scoped>
