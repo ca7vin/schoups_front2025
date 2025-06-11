@@ -64,6 +64,12 @@ function stopAutoplay() {
 function startAutoplay() {
   swiper.value?.autoplay?.start()
 }
+  onMounted(() => {
+  // Attend que tout soit prêt, puis essaie de démarrer autoplay
+  setTimeout(() => {
+    swiper.value?.autoplay?.start?.()
+  }, 300)
+})
 </script>
 
 <style scoped>
